@@ -84,14 +84,14 @@
           <!-- small box -->
           <div class="small-box bg-info">
             <div class="inner">
-              <h3></h3>
+              <h3>{{ $JumlahAnggota }}</h3>
 
               <p>List Anggota</p>
             </div>
             <div class="icon">
               <i class="ion ion-bag"></i>
             </div>
-            <a href="#" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{route('anggota')}}" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -99,14 +99,14 @@
           <!-- small box -->
           <div class="small-box bg-success">
             <div class="inner">
-              <h3></h3>
+              <h3>{{ $JumlahKategori }}</h3>
 
               <p>List Kategori</p>
             </div>
             <div class="icon">
               <i class="ion ion-stats-bars"></i>
             </div>
-            <a href="#" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/kategori" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -114,14 +114,14 @@
           <!-- small box -->
           <div class="small-box bg-warning">
             <div class="inner">
-              <h3></h3>
+              <h3>{{ $JumlahHasilTani }}</h3>
 
               <p>List Hasil Tani</p>
             </div>
             <div class="icon">
               <i class="ion ion-person-add"></i>
             </div>
-            <a href="#" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/hasiltani" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -129,14 +129,14 @@
           <!-- small box -->
           <div class="small-box bg-danger">
             <div class="inner">
-              <h3></h3>
+              <h3>{{ $JumlahPupuk }}</h3>
 
               <p>List Pupuk</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="/pupuk" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

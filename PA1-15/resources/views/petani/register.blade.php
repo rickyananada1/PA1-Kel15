@@ -99,37 +99,51 @@
                             <div class="brand-logo">
                                 <h2 class="text-success" style="font-family: verdana"; align="center">REGISTER</h2>
                             </div>
-                            @if (session('message'))
-                                <div class="alert alert-message">
-                                    {{session('message')}}
+                            @if (Session::has('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>Error: </strong> {{ Session::get('error') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                 </div>
                             @endif
                             <form class="pt-3" action="{{ url('petani/register') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="nama">UserName</label>
+                                    <label for="nama">Nama</label>
                                     <input type="text" name="nama" id="nama"
-                                        class="form-control form-control-lg" id="exampleInputEmail1"
-                                        placeholder="Nama">
+                                        class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Nama">
                                 </div>
+                                @error('nama')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="text" name="email" id="email"
                                         class="form-control form-control-lg" id="exampleInputEmail1"
                                         placeholder="Email">
                                 </div>
+                                @error('email')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group">
                                     <label for="password">Password</label>
                                     <input type="password" name="password" id="password"
                                         class="form-control form-control-lg" id="exampleInputPassword1"
                                         placeholder="Password">
                                 </div>
+                                @error('password')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="form-group">
                                     <label for="confirm_password">Confirm Password</label>
                                     <input type="password" name="confirm_password" id="confirm_password"
                                         class="form-control form-control-lg" id="confirm_password"
                                         placeholder="confirm_password">
                                 </div>
+                                @error('confirm_password')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
                                 <div class="mt-3">
                                     <button type="submit"
                                         class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">

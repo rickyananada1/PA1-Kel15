@@ -12,13 +12,12 @@
     <link href="https://cdn.datatables.net/v/bs4/dt-1.13.4/datatables.min.css" rel="stylesheet" />
 @endpush
 @section('content')
-    <div class="container d-block">
         @if (session('message'))
             <div class="alert alert-success">
                 {{session('message')}}
             </div>
         @endif
-        <table class="table" id="myTable">
+        <table class="table" border="1" id="myTable">
             <thead>
                 <tr>
                     <th scope="col">No</th>
@@ -60,5 +59,4 @@
                 @endforelse
             </tbody>
         </table>
-    </div>
 @endsection

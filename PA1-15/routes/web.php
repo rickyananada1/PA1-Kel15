@@ -3,6 +3,7 @@
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\HasilTaniController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\PupukController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,17 +23,25 @@ require __DIR__ . '/auth.php';
 
 Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function () {
     // Admin Login route
-    Route::match(['get', 'post'], 'login', 'AdminController@login');
+    Route::match (['get', 'post'], 'login', 'AdminController@login');
+    Route::middleware(['admin'])->group(function () {
+        Route::resource('kategori', 'KategoriController');
+        Route::resource('hasiltani', 'HasilTaniController');
+        Route::resource('pupuk', 'PupukController');
+    });
     Route::group(['middleware' => ['admin']], function () {
+        // Route::resource('kategori', '\Admin\KategoriController');
+        // Route::resource('hasiltani', 'HasilTaniController');
+        // Route::resource('pupuk', 'PupukController');
         //Route Admin Dashboard
         Route::get('dashboard', 'AdminController@dashboard');
         //Update Admin Password
-        Route::match(['get', 'post'], 'update-admin-password', 'AdminController@UpdateAdminPassword');
+        Route::match (['get', 'post'], 'update-admin-password', 'AdminController@UpdateAdminPassword');
         //Check Admin Password
         Route::post('check-admin-password', 'AdminController@checkAdminPassword');
 
         //Update Admin Details
-        Route::match(['get', 'post'], 'update-admin-details', 'AdminController@UpdateAdminDetails');
+        Route::match (['get', 'post'], 'update-admin-details', 'AdminController@UpdateAdminDetails');
         //view Anggota
         Route::get('anggota/{nama?}', 'AdminController@anggota')->name('anggota');
         //Admin Logout
@@ -47,25 +56,22 @@ Route::prefix('/petani')->namespace('App\Http\Controllers\Anggota')->group(funct
     //Akun Delete
     Route::delete('delete-account', 'AnggotaController@deleteAccount')->name('delete-account');
     //Petani Login Route
-    Route::match(['get', 'post'], 'login', 'AnggotaController@login');
+    Route::match (['get', 'post'], 'login', 'AnggotaController@login');
     Route::group(['middleware' => ['petani']], function () {
         //Route Petani Dashboard
         Route::get('dashboard', 'AnggotaController@dashboard')->middleware('CheckAprroval');
         //Update Petani Password
-        Route::match(['get', 'post'], 'update-petani-password', 'AnggotaController@UpdatePetaniPassword');
+        Route::match (['get', 'post'], 'update-petani-password', 'AnggotaController@UpdatePetaniPassword');
         //check petani password
         Route::post('check-petani-password', 'AnggotaController@checkPetaniPassword');
 
         //update petani Details
-        Route::match(['get', 'post'], 'update-petani-details', 'AnggotaController@UpdatePetaniDetails');
+        Route::match (['get', 'post'], 'update-petani-details', 'AnggotaController@UpdatePetaniDetails');
 
         //Petani Logout
         Route::get('logout', 'AnggotaController@logout');
         //Petani Profile
         Route::get('profile', 'AnggotaController@profile');
     });
-    Route::match(['get', 'post'], 'register', 'AnggotaController@register');
+    Route::match (['get', 'post'], 'register', 'AnggotaController@register');
 });
-
-Route::resource('kategori', KategoriController::class);
-Route::resource('hasiltani', HasilTaniController::class);

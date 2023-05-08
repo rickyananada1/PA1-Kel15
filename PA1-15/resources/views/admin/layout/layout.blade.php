@@ -80,9 +80,10 @@
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{asset('/LTE/plugins/fontawesome-free/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('/LTE/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset("/LTE/dist/css/adminlte.min.css")}}">
+    <link rel="stylesheet" href="{{ asset('/LTE/dist/css/adminlte.min.css') }}">
+    @stack('style')
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -117,21 +118,28 @@
             <section class="content">
 
                 <!-- Default box -->
-                @yield('content')
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"></h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        @yield('content')
+                    </div>
+                    <!-- /.card-body -->
+                    <!-- /.card-footer-->
+                </div>
                 <!-- /.card -->
 
             </section>
             <!-- /.content -->
         </div>
         <!-- /.content-wrapper -->
-
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.2.0
-            </div>
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights
-            reserved.
-        </footer>
 
         <!-- Control Sidebar -->
         <aside class="control-sidebar control-sidebar-dark">
@@ -142,11 +150,12 @@
     <!-- ./wrapper -->
 
     <!-- jQuery -->
-    <script src="{{asset('/LTE/plugins/jquery/jquery.min.js')}}"></script>
+    <script src="{{ asset('/LTE/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
-    <script src="{{asset('/LTE/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ asset('/LTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- LTELTE App -->
-    <script src="{{asset('/LTE/dist/js/adminlte.min.js')}}"></script>
+    <script src="{{ asset('/LTE/dist/js/adminlte.min.js') }}"></script>
+    @stack('script')
 </body>
 
 </html>

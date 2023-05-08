@@ -97,21 +97,13 @@
                         <div class="col-lg-4 mx-auto">
                             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                                 <div class="brand-logo">
-                                    <h2 class="text-success" style="font-family: verdana"; align="center">AGROMAJU</h2>
+                                    <h2 class="text-center" style="font-family: verdana;">
+                                        <a href="/" class="text-success" style="text-decoration: none">AGROMAJU</a>
+                                    </h2>
                                 </div>
-                                @if (Session::has('error_message'))
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        <strong>Error: </strong> {{ Session::get('error_message') }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                @endif
-                                @if ($errors->any())
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
+                                @if (Session::has('success_message'))
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Success: </strong> {{ Session::get('success_message') }}
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -120,15 +112,21 @@
                                 <form class="pt-3" action="{{ url('petani/login') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <input type="text" name="email" id="email"
+                                        <input type="email" name="email" id="email"
                                             class="form-control form-control-lg" id="exampleInputEmail1"
-                                            placeholder="Email">
+                                            placeholder="Masukkan Email">
                                     </div>
+                                    @error('email')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                     <div class="form-group">
                                         <input type="password" name="password" id="password"
                                             class="form-control form-control-lg" id="exampleInputPassword1"
-                                            placeholder="Password">
+                                            placeholder="Masukkan Password">
                                     </div>
+                                    @error('password')
+                                        <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
                                     <div class="mt-3">
                                         <button type="submit"
                                             class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">

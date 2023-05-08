@@ -1,19 +1,8 @@
 @extends('admin.layout.layout')
+@section('title')
+    Data Diri
+@endsection
 @section('content')
-<style>
-    .profile-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .profile-img {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
-</style>
 <div class="container mt-5">
     <div class="row">
         <div class="col">

@@ -30,8 +30,18 @@
 </head>
 
 <body>
+    @if (Auth::guard('petani')->check())
+        @if (Session::has('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Error: </strong> {{ Session::get('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+    @endif
     <!-- Navbar Start -->
-    @if (!Auth::guard('petani')->check() && !Auth::guard('admin')->check())
+    {{-- @if (!Auth::guard('petani')->check() && !Auth::guard('admin')->check())
         <div class="container-fluid bg-light position-relative shadow">
             <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
                 <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px">
@@ -56,52 +66,49 @@
                                 @endforelse
                             </div>
                         </div>
-                    @else
-                        <div class="container-fluid bg-light position-relative shadow">
-                            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
-                                <a href="" class="navbar-brand font-weight-bold text-secondary"
-                                    style="font-size: 50px">
-                                    <i class="flaticon-043-teddy-bear"></i>
-                                    <span class="text-primary">AGROMAJU</span>
-                                </a>
-                                <button type="button" class="navbar-toggler" data-toggle="collapse"
-                                    data-target="#navbarCollapse">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-                                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                                    <div class="navbar-nav font-weight-bold mx-auto py-0">
-                                        <a href="index.html" class="nav-item nav-link active">Home</a>
-                                        <a href="about.html" class="nav-item nav-link">About Us</a>
-                                        <a href="class.html" class="nav-item nav-link">Hasil Tani</a>
-                                        <div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle"
-                                                data-toggle="dropdown">Kategori</a>
-                                            <div class="dropdown-menu rounded-0 m-0">
-                                                @forelse ($kategori as $item)
-                                                    <a href="#" class="dropdown-item">{{ $item->nama }}</a>
-                                                @empty
-                                                    <a href="">Not Found Kategori</a>
-                                                @endforelse
-                                            </div>
-                                        </div>
-                                        <a href="contact.html" class="nav-item nav-link">Pupuk</a>
-                                    </div>
-    @endif
+                    @else --}}
+    <div class="container-fluid bg-light position-relative shadow">
+        <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0 px-lg-5">
+            <a href="" class="navbar-brand font-weight-bold text-secondary" style="font-size: 50px">
+                <i class="flaticon-043-teddy-bear"></i>
+                <span class="text-primary">AGROMAJU</span>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav font-weight-bold mx-auto py-0">
+                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About Us</a>
+                    <a href="class.html" class="nav-item nav-link">Hasil Tani</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Kategori</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            @forelse ($kategori as $item)
+                                <a href="#" class="dropdown-item">{{ $item->nama }}</a>
+                            @empty
+                                <a href="">Not Found Kategori</a>
+                            @endforelse
+                        </div>
+                    </div>
+                    <a href="/pupuk" class="nav-item nav-link">Pupuk</a>
+                </div>
+                {{-- @endif --}}
 
-    </div>
-    @if (!Auth::guard('petani')->check() && !Auth::guard('admin')->check())
-        <a href="petani/login" class="btn btn-primary px-4">Login</a>
-        <a href="petani/register" class="btn btn-primary px-4 ml-3">Pendaftaran Anggota</a>
-    @elseif (Auth::guard('admin')->check())
-        <a href="admin/dashboard" class="btn btn-primary px-4">Profile</a>
-    @elseif (Auth::guard('petani')->check())
-        <a href="petani/dashboard" class="btn btn-primary px-4">Profile</a>
-    @endif
-    @if (Auth::guard('petani')->check())
-        <a href="{{ url('/petani/logout') }}" class="btn btn-primary px-4  ml-2">Logout</a>
-    @elseif (Auth::guard('admin')->check())
-        <a href="{{ url('/admin/logout') }}" class="btn btn-primary px-4 ml-2">Logout</a>
-    @endif
+            </div>
+            @if (!Auth::guard('petani')->check() && !Auth::guard('admin')->check())
+                <a href="petani/login" class="btn btn-primary px-4">Login</a>
+                <a href="petani/register" class="btn btn-primary px-4 ml-3">Pendaftaran Anggota</a>
+            @elseif (Auth::guard('admin')->check())
+                <a href="admin/dashboard" class="btn btn-primary px-4">Profile</a>
+            @elseif (Auth::guard('petani')->check())
+                <a href="petani/dashboard" class="btn btn-primary px-4">Profile</a>
+            @endif
+            @if (Auth::guard('petani')->check())
+                <a href="{{ url('/petani/logout') }}" class="btn btn-primary px-4  ml-2">Logout</a>
+            @elseif (Auth::guard('admin')->check())
+                <a href="{{ url('/admin/logout') }}" class="btn btn-primary px-4 ml-2">Logout</a>
+            @endif
     </div>
     </nav>
     </div>
@@ -541,70 +548,26 @@
         <div class="container p-0">
             <div class="text-center pb-2">
                 <p class="section-title px-5">
-                    <span class="px-2">Testimonial</span>
+                    <span class="px-2">Informasi Hasil Tani</span>
                 </p>
-                <h1 class="mb-4">What Parents Say!</h1>
+                <h1 class="mb-4">Hasil Tani</h1>
             </div>
             <div class="owl-carousel testimonial-carousel">
                 <div class="testimonial-item px-3">
-                    <div class="bg-light shadow-sm rounded mb-4 p-4">
-                        <h3 class="fas fa-quote-left text-primary mr-3"></h3>
-                        Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr
-                        eirmod clita lorem. Dolor tempor ipsum clita
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <img class="rounded-circle" src="img/testimonial-1.jpg" style="width: 70px; height: 70px"
-                            alt="Image" />
-                        <div class="pl-3">
-                            <h5>Parent Name</h5>
-                            <i>Profession</i>
+                    @foreach ($hasiltani as $item)
+                        <div class="bg-light shadow-sm rounded mb-4 p-4">
+                            <h3 class="fas fa-quote-left text-primary mr-3"></h3>
+                            {{ $item->deskripsi }}
                         </div>
-                    </div>
-                </div>
-                <div class="testimonial-item px-3">
-                    <div class="bg-light shadow-sm rounded mb-4 p-4">
-                        <h3 class="fas fa-quote-left text-primary mr-3"></h3>
-                        Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr
-                        eirmod clita lorem. Dolor tempor ipsum clita
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <img class="rounded-circle" src="img/testimonial-2.jpg" style="width: 70px; height: 70px"
-                            alt="Image" />
-                        <div class="pl-3">
-                            <h5>Parent Name</h5>
-                            <i>Profession</i>
+                        <div class="d-flex align-items-center">
+                            <img class="rounded-circle" src="{{ asset('image/' . $item->image) }}"
+                                style="width: 70px; height: 70px" alt="Image" />
+                            <div class="pl-3">
+                                <h5>{{ $item->nama }}</h5>
+                                <i>{{ number_format($item->harga, 3) }}</i>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="testimonial-item px-3">
-                    <div class="bg-light shadow-sm rounded mb-4 p-4">
-                        <h3 class="fas fa-quote-left text-primary mr-3"></h3>
-                        Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr
-                        eirmod clita lorem. Dolor tempor ipsum clita
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <img class="rounded-circle" src="img/testimonial-3.jpg" style="width: 70px; height: 70px"
-                            alt="Image" />
-                        <div class="pl-3">
-                            <h5>Parent Name</h5>
-                            <i>Profession</i>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-item px-3">
-                    <div class="bg-light shadow-sm rounded mb-4 p-4">
-                        <h3 class="fas fa-quote-left text-primary mr-3"></h3>
-                        Sed ea amet kasd elitr stet, stet rebum et ipsum est duo elitr
-                        eirmod clita lorem. Dolor tempor ipsum clita
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <img class="rounded-circle" src="img/testimonial-4.jpg" style="width: 70px; height: 70px"
-                            alt="Image" />
-                        <div class="pl-3">
-                            <h5>Parent Name</h5>
-                            <i>Profession</i>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

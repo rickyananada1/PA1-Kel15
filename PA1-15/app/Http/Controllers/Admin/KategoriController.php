@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 
@@ -21,7 +22,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        return view ('admin.kategori.create');
+        return view('admin.kategori.create');
     }
 
     /**
@@ -46,7 +47,7 @@ class KategoriController extends Controller
         $kategori->deskripsi = $request->deskripsi;
 
         $kategori->save();
-        return redirect('/kategori');
+        return redirect('/admin/kategori')->with('success_message', 'Kategori' . $kategori->nama . 'Berhasil ditambahkan');
     }
 
     /**
@@ -55,7 +56,7 @@ class KategoriController extends Controller
     public function show(string $id)
     {
         $kategori = Kategori::find($id);
-        return view ('admin.kategori.read', compact('kategori'));
+        return view('admin.kategori.read', compact('kategori'));
     }
 
     /**
@@ -64,7 +65,7 @@ class KategoriController extends Controller
     public function edit(string $id)
     {
         $kategori = Kategori::find($id);
-        return view ('admin.kategori.edit', compact('kategori'));
+        return view('admin.kategori.edit', compact('kategori'));
     }
 
     /**
@@ -89,7 +90,7 @@ class KategoriController extends Controller
         $kategori->deskripsi = $request['deskripsi'];
 
         $kategori->update();
-        return redirect('/kategori');
+        return redirect('/admin/kategori')->with('success_message', 'Kategori' . $kategori->nama . 'Berhasil diupdate');
     }
 
     /**
@@ -99,6 +100,6 @@ class KategoriController extends Controller
     {
         $kategori = Kategori::find($id);
         $kategori->delete();
-        return redirect('/kategori');
+        return redirect('/admin/kategori')->with('success_message', 'Kategori' . $kategori->nama . 'berhasil dihapus');
     }
 }

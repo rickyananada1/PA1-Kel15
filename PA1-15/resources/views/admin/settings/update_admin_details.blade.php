@@ -1,7 +1,7 @@
 @extends('admin.layout.layout')
 @section('content')
     <div class="main-panel">
-        <div class="content-wrapper">
+        <div class="content">
             <div class="row">
                 <div class="col grid-margin stretch-card">
                     <div class="card">
@@ -110,6 +110,5 @@
                 </div>
             </div>
         </div>
-        @include('admin.layout.footer')
     </div>
 @endsection

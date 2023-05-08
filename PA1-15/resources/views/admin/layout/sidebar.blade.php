@@ -169,7 +169,7 @@
             <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
             <li class="nav-item">
-                <a href="/dashboard" class="nav-link">
+                <a href="/admin/dashboard" class="nav-link">
                     <i class="nav-icon fas fa-tachometer-alt"></i>
                     <p>
                         Dashboard
@@ -177,8 +177,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../widgets.html" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                <a href="{{route('anggota')}}" class="nav-link">
+                    <i class="fa fa-list px-1"></i> &nbsp;
                     <p>
                         List Anggota
                     </p>
@@ -194,13 +194,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="../../index.html" class="nav-link">
+                        <a href="/admin/kategori" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>List Kategori</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="../../index2.html" class="nav-link">
+                        <a href="/admin/kategori/create" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Add Kategori</p>
                         </a>
@@ -217,13 +217,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="../layout/top-nav.html" class="nav-link">
+                        <a href="/admin/hasiltani" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>List Hasil Tani</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="../layout/top-nav-sidebar.html" class="nav-link">
+                        <a href="/admin/hasiltani/create" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Add Hasil Tani</p>
                         </a>
@@ -240,13 +240,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="../charts/chartjs.html" class="nav-link">
+                        <a href="/admin/pupuk" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>List Pupuk</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="../charts/flot.html" class="nav-link">
+                        <a href="/admin/pupuk/create" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Add Pupuk</p>
                         </a>
@@ -297,7 +297,7 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="../tables/simple.html" class="nav-link">
+                        <a href="/admin/profile" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Personal Data</p>
                         </a>
@@ -314,13 +314,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="../charts/chartjs.html" class="nav-link">
+                        <a href="{{ url('admin/update-admin-password') }}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Setting Password</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="../charts/flot.html" class="nav-link">
+                        <a href="{{ url('admin/update-admin-details')}}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Setting Profile</p>
                         </a>

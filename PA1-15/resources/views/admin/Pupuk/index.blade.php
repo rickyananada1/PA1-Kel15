@@ -1,5 +1,14 @@
 @extends('admin.layout.layout')
+@section('title')
+    Daftar Pupuk
+@endsection
 @push('script')
+    <script>
+        $(document).ready(function() {
+            $('#table').DataTable();
+        });
+    </script>
+    <script src="https://cdn.datatables.net/v/bs4/dt-1.13.4/datatables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
@@ -21,7 +30,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "/admin/hasiltani/" + id,
+                        url: "/admin/pupuk/" + id,
                         type: "POST",
                         data: {
                             _method: 'DELETE',
@@ -42,34 +51,45 @@
         });
     </script>
 @endpush
-@section('title')
-    Daftar Informasi Hasil Tani
-@endsection
+@push('style')
+    <link href="https://cdn.datatables.net/v/bs4/dt-1.13.4/datatables.min.css" rel="stylesheet" />
+@endpush
 @section('content')
-    <div class="row">
-        @forelse ($hasiltani as $item)
-            <div class="col-3">
-                <div class="card">
-                    <img src="{{ asset('image/' . $item->image) }}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h2 class="card-text">Nama: {{ $item->nama }}</h2>
-                        <h4 class="card-text">Harga: Rp{{ number_format($item->harga, 3) }}</h4>
-                        <p class="card-text">Keterangan: {{ Str::limit($item->deskripsi, 20) }}</p>
-                        <form action="/admin/hasiltani/{{ $item->id }}" method="POST">
+    <table class="table" id="table">
+        <thead>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama</th>
+                <th scope="col">Jenis</th>
+                <th scope="col">Stok</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($pupuk as $key => $value)
+                <tr>
+                    <td>{{ $key + 1 }}</td>
+                    <td>{{ $value->nama }}</td>
+                    <td>{{ $value->jenis }}</td>
+                    <td>{{ $value->stok }}Kg</td>
+                    <td>
+                        <form action="/admin/pupuk/{{ $value->id }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <a href="/admin/hasiltani/{{ $item->id }}" class="btn btn-primary btn-sm"><i
+                            <a href="/admin/pupuk/{{ $value->id }}" class="btn btn-info btn-sm"><i
                                     class="fas fa-eye"></i></a>
-                            <a href="/admin/hasiltani/{{ $item->id }}/edit" class="btn btn-primary btn-sm ml-5 mr-5"><i
+                            <a href="/admin/pupuk/{{ $value->id }}/edit" class="btn btn-info btn-sm ml-3 mr-3"><i
                                     class="fas fa-edit"></i></a>
-                            <button type="submit" class="btn btn-danger btn-sm delete" name="{{ $item->nama }}"
-                                id="{{ $item->id }}"><i class="fas fa-trash"></i></button>
+                            <button class="btn btn-danger btn-sm delete" name="{{ $value->nama }}"
+                                id="{{ $value->id }}"><i class="fas fa-trash"></i></button>
                         </form>
-                    </div>
-                </div>
-            </div>
-        @empty
-            <h1>Tidak Ada Hasil Tani</h1>
-        @endforelse
-    </div>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td>Not Found Data</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
 @endsection

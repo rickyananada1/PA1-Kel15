@@ -5,11 +5,9 @@ namespace App\Http\Controllers\Anggota;
 use App\Http\Controllers\Anggota\Redirect;
 use App\Http\Controllers\Controller;
 use App\Models\Anggota;
-use App\Notifications\BellNotification;
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class AnggotaController extends Controller
@@ -23,6 +21,18 @@ class AnggotaController extends Controller
     {
         if ($request->isMethod('post')) {
             $data = $request->all();
+            $rules = [
+                'current_password' => 'required',
+                'new_password' => 'required|min:8',
+                'confirm_password' => 'required',
+            ];
+            $message = [
+                'current_password.required' => 'Current Password Harus Di Isi',
+                'new_password.required' => 'Password Baru Harus Di Isi',
+                'new_password.min' => 'Password Baru minimal 8 karakter',
+                'confirm_password.required' => 'Confirm Password Harus Di Isi',
+            ];
+            $this->validate($request, $rules, $message);
 
             if (Hash::check($data['current_password'], Auth::guard('petani')->user()->password)) {
                 if ($data['confirm_password'] == $data['new_password']) {
@@ -70,6 +80,7 @@ class AnggotaController extends Controller
                 'Nama.required' => 'Nama Harus Di Isi',
                 'NoTelephone.required' => 'No Telephone Harus Di Isi',
                 'NoTelephone.numeric' => 'No Telephone yang Benar Harus Di Isi',
+                'alamat.required' => 'Kolom Alamat Harus Di Isi',
                 'Nama.regex' => 'Nama yang Benar Harus Di Isi',
                 'Email.required' => 'Email Harus Di Isi',
                 'Email.email' => 'Email tidak valid',
@@ -109,21 +120,21 @@ class AnggotaController extends Controller
             $data = $request->all();
 
             $rules = [
-                'email' => 'required|email|max:255',
+                'email' => 'required|email|max:255|exists:anggotas,email',
                 'password' => 'required',
             ];
-            $customMessages = [
-                'email.required' => 'Email is required.',
-                'email.email' => 'Email is not valid.',
-                'password.required' => 'Password is required.',
-                'password.min' => 'Password must be at least 6 characters.',
+            $message = [
+                'email.required' => 'Email Harus Di Isi.',
+                'email.email' => 'Email Tidak Sesuai',
+                'email.exists' => 'Email Belum Terdaftar',
+                'password.required' => 'Password Harus Di Isi.',
             ];
-            $this->validate($request, $rules, $customMessages);
+            $this->validate($request, $rules, $message);
 
             if (Auth::guard('petani')->attempt(['email' => $data['email'], 'password' => $data['password']])) {
                 return redirect('/petani/dashboard');
             } else {
-                return redirect()->back()->with('error_message', 'Invalid Email or Password');
+                return redirect('/petani/login');
             }
         }
         return view('petani.login');
@@ -143,6 +154,24 @@ class AnggotaController extends Controller
 
         if ($request->isMethod('post')) {
             $data = $request->input();
+            $rules = [
+                'nama' => 'required|regex:/^[\pL\s\-]+$/u',
+                'email' => 'required|email|max:255|unique:anggotas,email',
+                'password' => 'required|min:8',
+                'confirm_password' => 'required|min:8',
+            ];
+            $message = [
+                'nama.required' => 'Nama Harus Di Isi',
+                'nama.regex' => 'Nama Tidak boleh menggunakan simbol/angka',
+                'email.required' => 'Email Harus Di Isi.',
+                'email.unique' => 'Email Sudah Terdaftar',
+                'email.email' => 'Email Tidak Sesuai',
+                'password.required' => 'Password Harus Di Isi.',
+                'password.min' => 'Password Minimal 8 karakter.',
+                'confirm_password.required' => 'Confirm Password Harus Di Isi',
+                'confirm_password.min' => 'Confirm Password minimal 8 karakter',
+            ];
+            $this->validate($request, $rules, $message);
             if ($data['password'] == $data['confirm_password']) {
                 Anggota::insert([
                     'nama' => $request->input('nama'),
@@ -152,7 +181,7 @@ class AnggotaController extends Controller
             } else {
                 return redirect()->back()->with('error', 'Password dan Confirm Password tidak sesuai');
             }
-            return redirect('petani/login')->with('success_message', 'Anggota Created Successfully');
+            return redirect('petani/login')->with('success_message', 'Anggota Berhasil Didaftarkan');
         }
         return view('petani.register');
     }

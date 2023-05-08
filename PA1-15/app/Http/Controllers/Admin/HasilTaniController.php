@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\HasilTani;
 use App\Models\Kategori;
+use File;
 use Illuminate\Http\Request;
 
 class HasilTaniController extends Controller
@@ -15,7 +17,7 @@ class HasilTaniController extends Controller
     {
         $hasiltani = HasilTani::all();
         $kategori = Kategori::get();
-        return view ('admin.HasilTani.index', compact('hasiltani'), compact('kategori'));
+        return view('admin.HasilTani.index', compact('hasiltani'), compact('kategori'));
     }
 
     /**
@@ -52,7 +54,7 @@ class HasilTaniController extends Controller
         ];
         $this->validate($request, $validate, $message);
 
-        $file = time(). '.' . $request->image->extension();
+        $file = time() . '.' . $request->image->extension();
         $request->image->move(public_path('image'), $file);
 
         $hasiltani = new HasilTani;
@@ -65,7 +67,7 @@ class HasilTaniController extends Controller
 
         $hasiltani->save();
 
-        return redirect('/hasiltani');
+        return redirect('/admin/hasiltani');
 
     }
 
@@ -74,7 +76,8 @@ class HasilTaniController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $hasiltani = HasilTani::find($id);
+        return view('admin.HasilTani.read', compact('hasiltani'));
     }
 
     /**
@@ -82,7 +85,9 @@ class HasilTaniController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $hasiltani = HasilTani::find($id);
+        $kategori = Kategori::get();
+        return view('admin.HasilTani.edit', compact('hasiltani', 'kategori'));
     }
 
     /**
@@ -90,7 +95,45 @@ class HasilTaniController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validate = [
+            'nama' => 'required|regex:/^[\pL\s\-]+$/u',
+            'harga' => 'required|numeric',
+            'deskripsi' => 'required',
+            'kategori_id' => 'required',
+        ];
+
+        $message = [
+            'nama.required' => 'Nama Harus Di Isi',
+            'nama.regex' => 'Nama Harus Berupa Huruf',
+            'harga.required' => 'Kolom Harga Harus Di Isi',
+            'harga.numeric' => 'Kolom Harga harus berupa Angka',
+            'deskripsi.required' => 'Kolom Deskripsi Harus di isi',
+            'kategori_id.required' => 'Kolom Kategori Harus Di pilih',
+        ];
+        $this->validate($request, $validate, $message);
+        $hasiltani = HasilTani::find($id);
+        if ($request->has('image')) {
+            $path = 'image/';
+            File::delete($path . $hasiltani->image);
+            $file = time() . '.' . $request->image->extension();
+
+            $request->image->move(public_path('image'), $file);
+
+            $hasiltani->image = $file;
+
+            $hasiltani->save();
+        }
+        // $file = time(). '.' . $request->image->extension();
+        // $request->image->move(public_path('image'), $file);
+
+        $hasiltani->nama = $request['nama'];
+        $hasiltani->harga = $request['harga'];
+        $hasiltani->deskripsi = $request['deskripsi'];
+        $hasiltani->kategori_id = $request['kategori_id'];
+
+        $hasiltani->update();
+
+        return redirect('/admin/hasiltani');
     }
 
     /**
@@ -98,6 +141,12 @@ class HasilTaniController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $hasiltani = HasilTani::find($id);
+
+        $path = 'image/';
+        File::delete($path . $hasiltani->image);
+
+        $hasiltani->delete();
+        return redirect('/admin/hasiltani');
     }
 }

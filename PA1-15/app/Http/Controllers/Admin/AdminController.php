@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Anggota;
+use App\Models\HasilTani;
 use App\Models\Kategori;
+use App\Models\Pupuk;
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
@@ -17,13 +19,28 @@ class AdminController extends Controller
     {
         $JumlahAnggota = Anggota::count();
         $JumlahKategori = Kategori::count();
-        return view('admin.dashboard', compact('JumlahAnggota'), compact('JumlahKategori'));
+        $JumlahHasilTani = HasilTani::count();
+        $JumlahPupuk = Pupuk::count();
+        return view('admin.dashboard', compact('JumlahAnggota', 'JumlahKategori', 'JumlahHasilTani', 'JumlahPupuk'));
     }
 
     public function UpdateAdminPassword(Request $request)
     {
         if ($request->isMethod('post')) {
             $data = $request->all();
+
+            $rules = [
+                'current_password' => 'required',
+                'new_password' => 'required|min:8',
+                'confirm_password' => 'required',
+            ];
+            $message = [
+                'current_password.required' => 'Current Password Harus Di Isi',
+                'new_password.required' => 'Password Baru Harus Di Isi',
+                'new_password.min' => 'Password Baru minimal 8 karakter',
+                'confirm_password.required' => 'Confirm Password Harus Di Isi'
+            ];
+            $this->validate($request, $rules, $message);
 
             if (Hash::check($data['current_password'], Auth::guard('admin')->user()->password)) {
                 if ($data['confirm_password'] == $data['new_password']) {
@@ -103,11 +120,8 @@ class AdminController extends Controller
     }
     public function login(Request $request)
     {
-        // echo $password = Hash::make('daman12345'); die;
         if ($request->isMethod('post')) {
             $data = $request->all();
-            // echo "<pre>";
-            // print_r($data); die;
 
             $rules = [
                 'email' => 'required|email|max:255',
