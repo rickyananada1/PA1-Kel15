@@ -10,4 +10,9 @@ class Pupuk extends Model
     use HasFactory;
     protected $table = 'pupuk';
     protected $fillable = ['nama', 'jenis', 'stok'];
+
+    public function pemesanan()
+    {
+        return $this->hasMany(Pemesanan::class, 'id');
+    }
 }

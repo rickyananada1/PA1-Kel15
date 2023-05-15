@@ -28,6 +28,6 @@
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
         <button type="submit" class="btn btn-primary">Create</button>
-        <a href="/pupuk" class="btn btn-danger">Cancel</a>
+        <a href="/admin/pupuk" class="btn btn-danger">Cancel</a>
     </form>
 @endsection

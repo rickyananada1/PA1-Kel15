@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Events\AnggotaCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Anggota;
 use App\Models\HasilTani;
 use App\Models\Kategori;
+use App\Models\Pemesanan;
 use App\Models\Pupuk;
+use App\Notifications\OffersNotification;
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
@@ -21,7 +24,8 @@ class AdminController extends Controller
         $JumlahKategori = Kategori::count();
         $JumlahHasilTani = HasilTani::count();
         $JumlahPupuk = Pupuk::count();
-        return view('admin.dashboard', compact('JumlahAnggota', 'JumlahKategori', 'JumlahHasilTani', 'JumlahPupuk'));
+        $JumlahPemesanan = Pemesanan::count();
+        return view('admin.dashboard', compact('JumlahAnggota', 'JumlahKategori', 'JumlahHasilTani', 'JumlahPupuk', 'JumlahPemesanan'));
     }
 
     public function UpdateAdminPassword(Request $request)
@@ -38,7 +42,7 @@ class AdminController extends Controller
                 'current_password.required' => 'Current Password Harus Di Isi',
                 'new_password.required' => 'Password Baru Harus Di Isi',
                 'new_password.min' => 'Password Baru minimal 8 karakter',
-                'confirm_password.required' => 'Confirm Password Harus Di Isi'
+                'confirm_password.required' => 'Confirm Password Harus Di Isi',
             ];
             $this->validate($request, $rules, $message);
 
@@ -166,8 +170,50 @@ class AdminController extends Controller
         }
         $data->save();
 
-        return redirect()->back()->with('message', $data['nama'] . 'Status has been changed Successfully');
+        return redirect()->back()->with('message', $data['nama'] . 'Status Penggunna Berhasil Diganti');
     }
+    public function statuspemesanan(Request $request, $id)
+    {
+        $data = Pemesanan::find($id);
+        $pupuk = $data->pupuk;
+
+        if ($request->has('status')) {
+            $status = $request->status;
+            if ($status == 1) {
+                // Cek apakah stok cukup
+                if ($pupuk->stok >= $data->stok) {
+                    $data->status = 1; // Disetujui
+                    $pupuk->stok -= $data->stok; // Kurangi stok pupuk
+                    $pupuk->save();
+                } else {
+                    return redirect()->back()->with('error', 'Stok tidak mencukupi');
+                }
+            } elseif ($status == 2) {
+                $data->status = 2; // Ditolak
+            } else {
+                $data->status = 0; // Menunggu
+            }
+        } else {
+            if ($data->status == 1) {
+                $data->status = 0;
+                $pupuk->stok += $data->stok; // Tambahkan stok pupuk
+                $pupuk->save();
+            } else {
+                $data->status = 1;
+                // Cek apakah stok cukup
+                if ($pupuk->stok >= $data->stok) {
+                    $pupuk->stok -= $data->stok; // Kurangi stok pupuk
+                    $pupuk->save();
+                } else {
+                    return redirect()->back()->with('error', 'Stok tidak mencukupi');
+                }
+            }
+        }
+
+        $data->save();
+        return redirect()->back()->with('message', 'Status Pemesanan Berhasil Diubah');
+    }
+
     public function logout()
     {
         Auth::guard('admin')->logout();
@@ -178,4 +224,27 @@ class AdminController extends Controller
     {
         return view('admin.profile.profile');
     }
+
+    public function daftarpemesanan()
+    {
+        $pemesanan = Pemesanan::get();
+        return view('admin.daftarpemesanan', compact('pemesanan'));
+    }
+
+    public function notify()
+    {
+        $admin = Admin::find(1);
+        $anggota = Anggota::get();
+        foreach ($anggota as $anggotaItem) {
+            $admin->notify(new OffersNotification($anggotaItem));
+        }
+    }
+    public function markasread($id)
+    {
+        if ($id) {
+            Auth::guard('admin')->user()->unreadNotifications->where('id', $id)->markAsRead();
+        }
+        return redirect()->back();
+    }
+
 }

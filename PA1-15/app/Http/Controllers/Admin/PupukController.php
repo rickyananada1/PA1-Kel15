@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pemesanan;
 use App\Models\Pupuk;
 use Illuminate\Http\Request;
 
@@ -33,13 +34,13 @@ class PupukController extends Controller
         $validasi = [
             'nama' => 'required|regex:/^[\pL\s\-]+$/u',
             'jenis' => 'required',
-            'stok' => 'required|numeric'
+            'stok' => 'required|numeric',
         ];
         $message = [
             'nama.required' => 'Nama Harus Di Isi',
             'nama.regex' => 'Nama Harus Berupa Huruf',
             'jenis.required' => 'Nama Harus Di Isi',
-            'stok.required' => 'Stok Harus Di Isi'
+            'stok.required' => 'Stok Harus Di Isi',
         ];
         $this->validate($request, $validasi, $message);
 
@@ -79,17 +80,17 @@ class PupukController extends Controller
         $validasi = [
             'nama' => 'required|regex:/^[\pL\s\-]+$/u',
             'jenis' => 'required',
-            'stok' => 'required|numeric'
+            'stok' => 'required|numeric',
         ];
         $message = [
             'nama.required' => 'Nama Harus Di Isi',
             'nama.regex' => 'Nama Harus Berupa Huruf',
             'jenis.required' => 'Nama Harus Di Isi',
-            'stok.required' => 'Stok Harus Di Isi'
+            'stok.required' => 'Stok Harus Di Isi',
         ];
         $this->validate($request, $validasi, $message);
 
-        $pupuk  = Pupuk::find($id);
+        $pupuk = Pupuk::find($id);
 
         $pupuk->nama = $request['nama'];
         $pupuk->jenis = $request['jenis'];
@@ -105,7 +106,7 @@ class PupukController extends Controller
      */
     public function destroy(string $id)
     {
-        $pupuk  = Pupuk::find($id);
+        $pupuk = Pupuk::find($id);
         $pupuk->delete();
         return redirect('/admin/pupuk');
     }

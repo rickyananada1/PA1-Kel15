@@ -136,10 +136,10 @@
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                                 <div class="form-group">
-                                    <label for="confirm_password">Confirm Password</label>
+                                    <label for="confirm_password">Konfirmasi Password</label>
                                     <input type="password" name="confirm_password" id="confirm_password"
                                         class="form-control form-control-lg" id="confirm_password"
-                                        placeholder="confirm_password">
+                                        placeholder="Konfirmasi Password">
                                 </div>
                                 @error('confirm_password')
                                     <div class="alert alert-danger">{{ $message }}</div>

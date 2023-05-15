@@ -67,7 +67,7 @@
                     <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
-                            <h3></h3>
+                            <h3>{{ $JumlahKategori }}</h3>
 
                             <p>List Kategori</p>
                         </div>
@@ -82,7 +82,7 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3></h3>
+                            <h3>{{ $JumlahHasilTani }}</h3>
 
                             <p>List Hasil Tani</p>
                         </div>
@@ -95,30 +95,16 @@
                 <!-- ./col -->
                 <div class="col-lg-3 col-6">
                     <!-- small box -->
-                    <div class="small-box bg-danger">
-                        <div class="inner">
-                            <h3></h3>
-
-                            <p>List Pupuk</p>
-                        </div>
-                        <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                        </div>
-                        <a href="" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                            <h3></h3>
+                            <h3>{{ $JumlahPemesanan }}</h3>
 
                             <p>Daftar Pemesanan Pupuk</p>
                         </div>
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="/petani/daftarpesan" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
                 <!-- ./col -->

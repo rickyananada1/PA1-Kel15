@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\Front\HomeController;
-use App\Http\Controllers\HasilTaniController;
-use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\PupukController;
 use Illuminate\Support\Facades\Route;
+use PhpParser\Node\Name;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,11 +28,11 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::resource('pupuk', 'PupukController');
     });
     Route::group(['middleware' => ['admin']], function () {
-        // Route::resource('kategori', '\Admin\KategoriController');
-        // Route::resource('hasiltani', 'HasilTaniController');
-        // Route::resource('pupuk', 'PupukController');
         //Route Admin Dashboard
         Route::get('dashboard', 'AdminController@dashboard');
+        //Route Notifikasi
+        Route::get('notify', 'AdminController@notify');
+        Route::get('markasread/{id}', 'AdminController@markasread')->name('markasread');
         //Update Admin Password
         Route::match (['get', 'post'], 'update-admin-password', 'AdminController@UpdateAdminPassword');
         //Check Admin Password
@@ -49,14 +47,19 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         //admin profile
         Route::get('profile', 'AdminController@profile');
         Route::get('status/{id}', 'AdminController@status')->name('status');
+        //Route status pemesanan
+        Route::get('daftarpemesanan', 'AdminController@daftarpemesanan')->name('daftarpemesanan');
+        Route::get('statuspemesanan/{id}', 'AdminController@statuspemesanan')->name('statuspemesanan');
     });
 });
 
 Route::prefix('/petani')->namespace('App\Http\Controllers\Anggota')->group(function () {
-    //Akun Delete
-    Route::delete('delete-account', 'AnggotaController@deleteAccount')->name('delete-account');
     //Petani Login Route
     Route::match (['get', 'post'], 'login', 'AnggotaController@login');
+    Route::middleware(['petani'])->group(function () {
+        Route::resource('kategori', 'KategoriController');
+        Route::resource('hasiltani', 'HasilTaniController');
+    });
     Route::group(['middleware' => ['petani']], function () {
         //Route Petani Dashboard
         Route::get('dashboard', 'AnggotaController@dashboard')->middleware('CheckAprroval');
@@ -72,6 +75,14 @@ Route::prefix('/petani')->namespace('App\Http\Controllers\Anggota')->group(funct
         Route::get('logout', 'AnggotaController@logout');
         //Petani Profile
         Route::get('profile', 'AnggotaController@profile');
+        //Pemesanan
+        // Route::get('pemesanan', 'AnggotaController@pemesanan');
+        Route::match (['get', 'post'], 'pesan', 'AnggotaController@pesan')->name('pemesanan.store');
+        //Route Daftar Pesanan
+        Route::get('daftarpesan', 'AnggotaController@daftarpesan')->name('listpesanan');
+        Route::delete('daftarpesan/{id}', 'AnggotaController@deletepesan')->name('hapuspesanan');
+        //Route Delete Akun
+        Route::delete('akun', 'AnggotaController@delete')->name('deleteakun');
     });
     Route::match (['get', 'post'], 'register', 'AnggotaController@register');
 });

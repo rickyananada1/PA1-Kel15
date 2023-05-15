@@ -263,9 +263,9 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="../UI/general.html" class="nav-link">
+                        <a href="/admin/daftarpemesanan" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>List Order</p>
+                            <p>Daftar Pemesan</p>
                         </a>
                     </li>
                 </ul>

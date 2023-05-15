@@ -1,0 +1,75 @@
+@extends('petani.layout.layout')
+@section('title')
+    Daftar Kategori
+@endsection
+@push('script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).on('click', '.delete', function(e) {
+            e.preventDefault();
+            var id = $(this).attr('id');
+            var name = $(this).attr('name');
+            Swal.fire({
+                title: 'Hapus ' + name + '?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal',
+                showLoaderOnConfirm: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/petani/hasiltani/" + id,
+                        type: "POST",
+                        data: {
+                            _method: 'DELETE',
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function() {
+                            Swal.fire(
+                                'Terhapus!',
+                                'Item telah terhapus.',
+                                'success'
+                            ).then(() => {
+                                location.reload();
+                            });
+                        },
+                    });
+                }
+            });
+        });
+    </script>
+@endpush
+@section('content')
+    <div class="row">
+        @forelse ($hasiltani as $item)
+            <div class="col-3">
+                <div class="card">
+                    <img src="{{ asset('image/' . $item->image) }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h2 class="card-text">Nama: {{ $item->nama }}</h2>
+                        <h4 class="card-text">Harga: Rp{{ number_format($item->harga, 3) }}</h4>
+                        <p class="card-text">Keterangan: {{ Str::limit($item->deskripsi, 20) }}</p>
+                        <form action="/petani/hasiltani/{{ $item->id }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <a href="/petani/hasiltani/{{ $item->id }}" class="btn btn-primary btn-sm"><i
+                                    class="fas fa-eye"></i></a>
+                            <a href="/petani/hasiltani/{{ $item->id }}/edit" class="btn btn-primary btn-sm ml-5 mr-5"><i
+                                    class="fas fa-edit"></i></a>
+                            <button type="submit" class="btn btn-danger btn-sm delete" name="{{ $item->nama }}"
+                                id="{{ $item->id }}"><i class="fas fa-trash"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <h1>Tidak Ada Hasil Tani</h1>
+        @endforelse
+    </div>
+@endsection

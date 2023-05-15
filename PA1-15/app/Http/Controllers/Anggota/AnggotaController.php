@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers\Anggota;
 
+use App\Events\AnggotaCreated;
 use App\Http\Controllers\Anggota\Redirect;
 use App\Http\Controllers\Controller;
 use App\Models\Anggota;
+use App\Models\HasilTani;
+use App\Models\Kategori;
+use App\Models\Pemesanan;
+use App\Models\Pupuk;
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
@@ -14,7 +19,11 @@ class AnggotaController extends Controller
 {
     public function dashboard()
     {
-        return view('petani.dashboard');
+        $JumlahKategori = Kategori::count();
+        $JumlahHasilTani = HasilTani::count();
+        $user = Auth::guard('petani')->user()->id;
+        $JumlahPemesanan = Pemesanan::where('anggota_id', $user)->count();
+        return view('petani.dashboard', compact('JumlahKategori', 'JumlahHasilTani', 'JumlahPemesanan'));
     }
 
     public function UpdatePetaniPassword(Request $request)
@@ -178,6 +187,7 @@ class AnggotaController extends Controller
                     'email' => $request->input('email'),
                     'password' => Hash::make($request->input('password')),
                 ]);
+                event(new AnggotaCreated($anggotaItem = $this->create($request->all())));
             } else {
                 return redirect()->back()->with('error', 'Password dan Confirm Password tidak sesuai');
             }
@@ -185,14 +195,72 @@ class AnggotaController extends Controller
         }
         return view('petani.register');
     }
-
-    public function deleteAccount(Request $request)
+    public function pesan(Request $request)
     {
-        $user = Auth::guard('petani')->user();
-        $user->delete();
+        if ($request->isMethod('post')) {
+            $data = $request->input();
+            $rules = [
+                'pupuk_id' => 'required',
+                'stok' => 'required',
+                'tanggal' => 'required',
+            ];
+            $messages = [
+                'pupuk_id.required' => 'Silahkan Pilih Nama Pupuk',
+                'stok.required' => 'Stok Harus Di isi',
+                'tanggal.required' => 'Tanggal Pemesanan Harus Di Pilih',
+            ];
+            $this->validate($request, $rules, $messages);
 
-        // Redirect to home page or any other page after deleting the account
-        return redirect('/');
+            $pemesanan = new Pemesanan;
+            $pemesanan->anggota_id = Auth::guard('petani')->user()->id;
+            $pemesanan->pupuk_id = $request->input('pupuk_id');
+            $pemesanan->stok = $request->input('stok');
+            $pemesanan->tanggal = $request->input('tanggal');
+
+            $pupuk = Pupuk::find($request->input('pupuk_id'));
+
+            if ($pemesanan->stok > $pupuk->stok) {
+                return redirect()->back()->with('error', 'Stok tidak mencukupi.');
+            }
+
+            $pemesanan->save();
+
+            if ($pemesanan->status == 1) {
+                $pupuk->stok -= $request->input('stok');
+                $pupuk->save();
+            }
+
+            return redirect()->back()->with('success', 'Pemesanan berhasil.');
+        }
+
+        $pupuk = Pupuk::get();
+        return view('petani.pemesanan', compact('pupuk'));
+    }
+
+    public function daftarpesan()
+    {
+        $user = Auth::guard('petani')->user()->id;
+        $pemesanan = Pemesanan::where('anggota_id', $user)->get();
+        return view('petani.datapesan', compact('pemesanan'));
+    }
+    public function deletepesan($id)
+    {
+        $pemesanan = Pemesanan::find($id);
+        if ($pemesanan->status != 0) {
+            return redirect()->back()->with('error', 'tidak dapat dihapus.');
+        } else {
+            $pemesanan->delete();
+            return redirect()->back()->with('success', 'Pemesanan berhasil dihapus.');
+        }
+    }
+    public function delete()
+    {
+        $anggotaId = Auth::guard('petani')->user()->id;
+        Pemesanan::where('anggota_id', $anggotaId)->delete();
+        Anggota::find($anggotaId)->delete();
+
+        Auth::guard('petani')->logout();
+        return redirect('/petani/login')->with('success_message', 'Akun berhasil dihapus.');
     }
 
 }

@@ -33,6 +33,10 @@ class Anggota extends Authenticatable implements MustVerifyEmail
         'status'
     ];
 
+    public function pemesanan()
+    {
+        return $this->hasMany(Pemesanan::class, 'id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -51,4 +55,6 @@ class Anggota extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
 }

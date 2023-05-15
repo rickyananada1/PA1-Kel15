@@ -2,22 +2,23 @@
 
 namespace App\Notifications;
 
-use Auth;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Channels\MailChannel;
 
-class BellNotification extends Notification
+
+class OffersNotification extends Notification
 {
     use Queueable;
-
+    private $anggota;
     /**
      * Create a new notification instance.
      */
     public function __construct($anggota)
     {
-        $anggota['nama'];
+        $this->anggota = $anggota;
     }
 
     /**
@@ -46,10 +47,12 @@ class BellNotification extends Notification
      *
      * @return array<string, mixed>
      */
-    public function toArray(object $notifiable, $anggota): array
+    public function toArray(object $notifiable): array
     {
         return [
-            'nama' => $anggota['nama'] . "Sudah Melakukan Register",
+            'anggota_id' => $this->anggota['id'],
+            'nama' => $this->anggota['nama'],
+            'email' => $this->anggota['email'],
         ];
     }
 }

@@ -184,7 +184,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="../UI/general.html" class="nav-link">
+                        <a href="{{route('listpesanan')}}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Daftar Order</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/petani/pesan" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Order</p>
                         </a>
@@ -227,6 +233,12 @@
                         <a href="{{ url('petani/update-petani-details') }}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Setting Profile</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/petani/akun" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Hapus Akun</p>
                         </a>
                     </li>
                 </ul>
