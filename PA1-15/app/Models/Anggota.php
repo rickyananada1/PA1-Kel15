@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Anggota extends Authenticatable implements MustVerifyEmail
 {
@@ -18,8 +17,8 @@ class Anggota extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
-     protected $guard = 'petani';
-     protected $fillable = [
+    protected $guard = 'petani';
+    protected $fillable = [
         'nama',
         'alamat',
         'umur',
@@ -30,7 +29,7 @@ class Anggota extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'image',
-        'status'
+        'status',
     ];
 
     public function pemesanan()
@@ -56,5 +55,11 @@ class Anggota extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function getLatestAnggotaNotificationTime()
+    {
+        return $this->notifications()
+            ->orderBy('created_at', 'desc')
+            ->value('created_at');
+    }
 
 }

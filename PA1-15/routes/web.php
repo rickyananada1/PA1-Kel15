@@ -26,13 +26,15 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         Route::resource('kategori', 'KategoriController');
         Route::resource('hasiltani', 'HasilTaniController');
         Route::resource('pupuk', 'PupukController');
+        //Route pengumuman
+        Route::resource('pengumuman', 'PengumumanController');
     });
     Route::group(['middleware' => ['admin']], function () {
         //Route Admin Dashboard
         Route::get('dashboard', 'AdminController@dashboard');
-        //Route Notifikasi
-        Route::get('notify', 'AdminController@notify');
-        Route::get('markasread/{id}', 'AdminController@markasread')->name('markasread');
+        // Route::get('notify', 'AdminController@notify');
+        Route::get('tandai/{id}', 'AdminController@read')->name('tandai');
+        Route::get('tandaisudahdibaca/{id}', 'AdminController@markasread')->name('tandaisudahdibaca');
         //Update Admin Password
         Route::match (['get', 'post'], 'update-admin-password', 'AdminController@UpdateAdminPassword');
         //Check Admin Password
@@ -63,6 +65,9 @@ Route::prefix('/petani')->namespace('App\Http\Controllers\Anggota')->group(funct
     Route::group(['middleware' => ['petani']], function () {
         //Route Petani Dashboard
         Route::get('dashboard', 'AnggotaController@dashboard')->middleware('CheckAprroval');
+        Route::get('markasread/{id}', 'AnggotaController@markasread')->name('markasread');
+        //Route Pengumuman
+        Route::get('pengumuman', 'AnggotaController@pengumuman');
         //Update Petani Password
         Route::match (['get', 'post'], 'update-petani-password', 'AnggotaController@UpdatePetaniPassword');
         //check petani password

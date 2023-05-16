@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Anggota;
 
-use App\Events\AnggotaCreated;
 use App\Http\Controllers\Anggota\Redirect;
 use App\Http\Controllers\Controller;
 use App\Models\Anggota;
 use App\Models\HasilTani;
 use App\Models\Kategori;
 use App\Models\Pemesanan;
+use App\Models\Pengumuman;
 use App\Models\Pupuk;
+use App\Notifications\PengumumanNotification;
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
@@ -23,7 +24,24 @@ class AnggotaController extends Controller
         $JumlahHasilTani = HasilTani::count();
         $user = Auth::guard('petani')->user()->id;
         $JumlahPemesanan = Pemesanan::where('anggota_id', $user)->count();
-        return view('petani.dashboard', compact('JumlahKategori', 'JumlahHasilTani', 'JumlahPemesanan'));
+        $JumlahPengumuman = Pengumuman::count();
+
+        $anggota = Auth::guard('petani')->user();
+
+        $pengumuman = Pengumuman::get();
+
+        foreach ($pengumuman as $value) {
+            $existNotifications = $anggota->notifications()
+                ->where('data->pengumuman_id', $value->id)
+                ->first();
+
+            if (!$existNotifications) {
+                $notification = new PengumumanNotification($value);
+
+                $anggota->notify($notification);
+            }
+        }
+        return view('petani.dashboard', compact('JumlahKategori', 'JumlahHasilTani', 'JumlahPemesanan', 'JumlahPengumuman'));
     }
 
     public function UpdatePetaniPassword(Request $request)
@@ -187,7 +205,6 @@ class AnggotaController extends Controller
                     'email' => $request->input('email'),
                     'password' => Hash::make($request->input('password')),
                 ]);
-                event(new AnggotaCreated($anggotaItem = $this->create($request->all())));
             } else {
                 return redirect()->back()->with('error', 'Password dan Confirm Password tidak sesuai');
             }
@@ -261,6 +278,20 @@ class AnggotaController extends Controller
 
         Auth::guard('petani')->logout();
         return redirect('/petani/login')->with('success_message', 'Akun berhasil dihapus.');
+    }
+
+    public function pengumuman()
+    {
+        $pengumuman = Pengumuman::get();
+        return view('petani.pengumuman', compact('pengumuman'));
+    }
+    public function markasread($id)
+    {
+        if ($id) {
+            Auth::guard('petani')->user()->notifications()->where('id', $id)->first()->markasread();
+        }
+
+        return redirect()->back();
     }
 
 }

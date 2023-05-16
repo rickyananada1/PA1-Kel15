@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\AnggotaCreated;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Models\Anggota;
@@ -11,6 +10,7 @@ use App\Models\Kategori;
 use App\Models\Pemesanan;
 use App\Models\Pupuk;
 use App\Notifications\OffersNotification;
+use App\Notifications\PemesananPupukNotification;
 use Auth;
 use Hash;
 use Illuminate\Http\Request;
@@ -25,6 +25,35 @@ class AdminController extends Controller
         $JumlahHasilTani = HasilTani::count();
         $JumlahPupuk = Pupuk::count();
         $JumlahPemesanan = Pemesanan::count();
+        $admin = Auth::guard('admin')->user();
+
+        $anggota = Anggota::get();
+
+        foreach ($anggota as $anggotaItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->anggota_id', $anggotaItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                $notification = new OffersNotification($anggotaItem);
+
+                $admin->notify($notification);
+            }
+        }
+
+        $pemesanan = Pemesanan::get();
+        foreach ($pemesanan as $pemesananItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->pemesanan_id', $pemesananItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                // Membuat instance notifikasi dan memberikan data pemesanan
+                $notification = new PemesananPupukNotification($pemesananItem);
+
+                $admin->notify($notification);
+            }
+        }
         return view('admin.dashboard', compact('JumlahAnggota', 'JumlahKategori', 'JumlahHasilTani', 'JumlahPupuk', 'JumlahPemesanan'));
     }
 
@@ -231,20 +260,65 @@ class AdminController extends Controller
         return view('admin.daftarpemesanan', compact('pemesanan'));
     }
 
-    public function notify()
-    {
-        $admin = Admin::find(1);
-        $anggota = Anggota::get();
-        foreach ($anggota as $anggotaItem) {
-            $admin->notify(new OffersNotification($anggotaItem));
-        }
-    }
+    // public function notify(Request $request)
+    // {
+    //     $admin = Admin::find(1);
+    //     $anggota = Anggota::get();
+    //     foreach ($anggota as $anggotaItem) {
+    //         $admin->notify(new OffersNotification($anggotaItem));
+    //     }
+    //     dd($anggota);
+    //     // Auth::guard('admin')->user()->unreadNotifications->when($request->input('id'),function($query) use ($request){
+    //     //     return $query->where('id', $request->input('id'));
+    //     // })->markasread();
+    // }
+    // public function notify(Request $request)
+    // {
+    //     $admin = Auth::guard('admin')->user();
+    //     $anggota = Anggota::get();
+
+    //     foreach ($anggota as $anggotaItem) {
+    //         // Check if a notification already exists for the specific anggota
+    //         $existingNotification = $admin->notifications()
+    //             ->where('data->anggota_id', $anggotaItem->id)
+    //             ->first();
+
+    //         if (!$existingNotification) {
+    //             // Create a new notification instance
+    //             $notification = new OffersNotification($anggotaItem);
+
+    //             // Save the notification to the admin user's notifications
+    //             $admin->notify($notification);
+    //         }
+    //     }
+
+    //     return redirect()->back();
+    // }
+    // public function markasread($id)
+    // {
+    //     if ($id) {
+    //         $notification = Auth::guard('admin')->user()->unreadNotifications->where('id', $id)->first();
+    //         if ($notification) {
+    //             $notification->markAsRead();
+    //         }
+    //     }
+    //     return redirect()->back();
+    // }
     public function markasread($id)
     {
         if ($id) {
-            Auth::guard('admin')->user()->unreadNotifications->where('id', $id)->markAsRead();
+            Auth::guard('admin')->user()->notifications()->where('id', $id)->first()->markAsRead();
         }
+
         return redirect()->back();
     }
 
+    public function read($id)
+    {
+        if ($id) {
+            Auth::guard('admin')->user()->notifications()->where('id', $id)->first()->markAsRead();
+        }
+
+        return redirect()->back();
+    }
 }

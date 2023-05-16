@@ -2,6 +2,55 @@
 @section('title')
     Profile Akun
 @endsection
+@push('script')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).on('click', '.delete', function(e) {
+            e.preventDefault();
+            var id = $(this).attr('id');
+            var name = $(this).attr('name');
+            Swal.fire({
+                title: 'Hapus ' + name + '?',
+                text: "Anda tidak akan dapat mengembalikan ini!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "/petani/login/" + id,
+                        type: "POST",
+                        data: {
+                            _method: 'DELETE',
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function() {
+                            Swal.fire(
+                                'Terhapus!',
+                                'Akun telah terhapus.',
+                                'success'
+                            ).then(function() {
+                                location.reload();
+                            });
+                        },
+                        error: function() {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Terjadi kesalahan! Item tidak bisa terhapus karena ada data didalam Item tersebut'
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+@endpush
 @section('content')
     <style>
         .profile-wrapper {
@@ -37,8 +86,7 @@
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm .delete"
                                 name="{{ Auth::guard('petani')->user()->nama }}"
-                                id="{{ Auth::guard('petani')->user()->id }}"
-                                onclick="Apakah Yakin ingin menghapus akun?">Hapus Akun</button>
+                                id="{{ Auth::guard('petani')->user()->id }}">Hapus Akun</button>
                     </div>
                     </form>
                 </div>
