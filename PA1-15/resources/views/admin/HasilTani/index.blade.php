@@ -46,6 +46,15 @@
     Daftar Informasi Hasil Tani
 @endsection
 @section('content')
+    <style>
+        .card-img-top {
+            width: 100%;
+            height: 200px;
+            /* Sesuaikan tinggi gambar sesuai kebutuhan */
+            object-fit: cover;
+            /* Mengatur gambar agar sesuai dengan ukuran yang ditentukan tanpa mengubah aspek rasio */
+        }
+    </style>
     <div class="row">
         @forelse ($hasiltani as $item)
             <div class="col-3">

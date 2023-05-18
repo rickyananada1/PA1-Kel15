@@ -16,6 +16,8 @@ use PhpParser\Node\Name;
  */
 
 Route::get('/', [HomeController::class, 'welcome']);
+Route::get('/hasiltani', [HomeController::class, 'hasiltani']);
+Route::get('hasiltani/{id}', [HomeController::class, 'search']);
 
 require __DIR__ . '/auth.php';
 
@@ -58,6 +60,8 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 Route::prefix('/petani')->namespace('App\Http\Controllers\Anggota')->group(function () {
     //Petani Login Route
     Route::match (['get', 'post'], 'login', 'AnggotaController@login');
+    //Route Forgot Password
+    Route::match(['get', 'post'], 'lupa-password', 'AnggotaController@forgotpassword');
     Route::middleware(['petani'])->group(function () {
         Route::resource('kategori', 'KategoriController');
         Route::resource('hasiltani', 'HasilTaniController');

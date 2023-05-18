@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Anggota;
 use App\Models\HasilTani;
 use App\Models\Kategori;
+use App\Models\Pemesanan;
+use App\Notifications\OffersNotification;
+use App\Notifications\PemesananPupukNotification;
+use Auth;
 use File;
 use Illuminate\Http\Request;
 
@@ -17,6 +22,36 @@ class HasilTaniController extends Controller
     {
         $hasiltani = HasilTani::all();
         $kategori = Kategori::get();
+
+        $admin = Auth::guard('admin')->user();
+
+        $anggota = Anggota::get();
+
+        foreach ($anggota as $anggotaItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->anggota_id', $anggotaItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                $notification = new OffersNotification($anggotaItem);
+
+                $admin->notify($notification);
+            }
+        }
+
+        $pemesanan = Pemesanan::get();
+        foreach ($pemesanan as $pemesananItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->pemesanan_id', $pemesananItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                // Membuat instance notifikasi dan memberikan data pemesanan
+                $notification = new PemesananPupukNotification($pemesananItem);
+
+                $admin->notify($notification);
+            }
+        }
         return view('admin.HasilTani.index', compact('hasiltani'), compact('kategori'));
     }
 
@@ -27,6 +62,36 @@ class HasilTaniController extends Controller
     {
         $hasiltani = HasilTani::all();
         $kategori = Kategori::get();
+
+        $admin = Auth::guard('admin')->user();
+
+        $anggota = Anggota::get();
+
+        foreach ($anggota as $anggotaItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->anggota_id', $anggotaItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                $notification = new OffersNotification($anggotaItem);
+
+                $admin->notify($notification);
+            }
+        }
+
+        $pemesanan = Pemesanan::get();
+        foreach ($pemesanan as $pemesananItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->pemesanan_id', $pemesananItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                // Membuat instance notifikasi dan memberikan data pemesanan
+                $notification = new PemesananPupukNotification($pemesananItem);
+
+                $admin->notify($notification);
+            }
+        }
         return view('admin.HasilTani.create', compact('kategori'), compact('hasiltani'));
     }
 
@@ -77,6 +142,36 @@ class HasilTaniController extends Controller
     public function show(string $id)
     {
         $hasiltani = HasilTani::find($id);
+
+        $admin = Auth::guard('admin')->user();
+
+        $anggota = Anggota::get();
+
+        foreach ($anggota as $anggotaItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->anggota_id', $anggotaItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                $notification = new OffersNotification($anggotaItem);
+
+                $admin->notify($notification);
+            }
+        }
+
+        $pemesanan = Pemesanan::get();
+        foreach ($pemesanan as $pemesananItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->pemesanan_id', $pemesananItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                // Membuat instance notifikasi dan memberikan data pemesanan
+                $notification = new PemesananPupukNotification($pemesananItem);
+
+                $admin->notify($notification);
+            }
+        }
         return view('admin.HasilTani.read', compact('hasiltani'));
     }
 
@@ -87,6 +182,36 @@ class HasilTaniController extends Controller
     {
         $hasiltani = HasilTani::find($id);
         $kategori = Kategori::get();
+
+        $admin = Auth::guard('admin')->user();
+
+        $anggota = Anggota::get();
+
+        foreach ($anggota as $anggotaItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->anggota_id', $anggotaItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                $notification = new OffersNotification($anggotaItem);
+
+                $admin->notify($notification);
+            }
+        }
+
+        $pemesanan = Pemesanan::get();
+        foreach ($pemesanan as $pemesananItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->pemesanan_id', $pemesananItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                // Membuat instance notifikasi dan memberikan data pemesanan
+                $notification = new PemesananPupukNotification($pemesananItem);
+
+                $admin->notify($notification);
+            }
+        }
         return view('admin.HasilTani.edit', compact('hasiltani', 'kategori'));
     }
 
@@ -123,8 +248,6 @@ class HasilTaniController extends Controller
 
             $hasiltani->save();
         }
-        // $file = time(). '.' . $request->image->extension();
-        // $request->image->move(public_path('image'), $file);
 
         $hasiltani->nama = $request['nama'];
         $hasiltani->harga = $request['harga'];

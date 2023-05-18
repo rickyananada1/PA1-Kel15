@@ -140,7 +140,7 @@
                                                 Ingatkan Saya
                                             </label>
                                         </div>
-                                        <a href="#" class="auth-link text-black">Lupa password?</a>
+                                        <a href="{{url('petani/lupa-password')}}" class="auth-link text-black">Lupa password?</a>
                                     </div>
                                     <div class="text-center mt-4 font-weight-light">
                                         Tidak Punya Akun? <a href="{{ url('petani/register') }}"

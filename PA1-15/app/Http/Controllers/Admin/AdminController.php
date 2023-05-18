@@ -8,6 +8,7 @@ use App\Models\Anggota;
 use App\Models\HasilTani;
 use App\Models\Kategori;
 use App\Models\Pemesanan;
+use App\Models\Pengumuman;
 use App\Models\Pupuk;
 use App\Notifications\OffersNotification;
 use App\Notifications\PemesananPupukNotification;
@@ -25,6 +26,7 @@ class AdminController extends Controller
         $JumlahHasilTani = HasilTani::count();
         $JumlahPupuk = Pupuk::count();
         $JumlahPemesanan = Pemesanan::count();
+        $JumlahPengumuman = Pengumuman::count();
         $admin = Auth::guard('admin')->user();
 
         $anggota = Anggota::get();
@@ -54,7 +56,7 @@ class AdminController extends Controller
                 $admin->notify($notification);
             }
         }
-        return view('admin.dashboard', compact('JumlahAnggota', 'JumlahKategori', 'JumlahHasilTani', 'JumlahPupuk', 'JumlahPemesanan'));
+        return view('admin.dashboard', compact('JumlahAnggota', 'JumlahKategori', 'JumlahHasilTani', 'JumlahPupuk', 'JumlahPemesanan', 'JumlahPengumuman'));
     }
 
     public function UpdateAdminPassword(Request $request)
@@ -87,6 +89,34 @@ class AdminController extends Controller
             }
         }
         $adminDetails = Admin::where('email', Auth::guard('admin')->user()->email)->first()->toArray();
+        $admin = Auth::guard('admin')->user();
+
+        $anggota = Anggota::get();
+
+        foreach ($anggota as $anggotaItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->anggota_id', $anggotaItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                $notification = new OffersNotification($anggotaItem);
+
+                $admin->notify($notification);
+            }
+        }
+
+        $pemesanan = Pemesanan::get();
+        foreach ($pemesanan as $pemesananItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->pemesanan_id', $pemesananItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                $notification = new PemesananPupukNotification($pemesananItem);
+
+                $admin->notify($notification);
+            }
+        }
         return view('admin.settings.update_admin_password')->with(compact('adminDetails'));
     }
     public function checkAdminPassword(Request $request)
@@ -149,6 +179,35 @@ class AdminController extends Controller
             Admin::where('id', Auth::guard('admin')->user()->id)->update(['nama' => $data['Nama'], 'NoTelephone' => $data['NoTelephone'], 'image' => $imageName, 'alamat' => $data['alamat'], 'umur' => $data['umur'], 'TempatLahir' => $data['TempatLahir'], 'TanggalLahir' => $data['TanggalLahir'], 'JenisKelamin' => $data['JenisKelamin'], 'email' => $data['Email']]);
             return redirect()->back()->with('success_message', 'Admin Details Berhasil di Update');
         }
+        $admin = Auth::guard('admin')->user();
+
+        $anggota = Anggota::get();
+
+        foreach ($anggota as $anggotaItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->anggota_id', $anggotaItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                $notification = new OffersNotification($anggotaItem);
+
+                $admin->notify($notification);
+            }
+        }
+
+        $pemesanan = Pemesanan::get();
+        foreach ($pemesanan as $pemesananItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->pemesanan_id', $pemesananItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                // Membuat instance notifikasi dan memberikan data pemesanan
+                $notification = new PemesananPupukNotification($pemesananItem);
+
+                $admin->notify($notification);
+            }
+        }
         return view('admin.settings.update_admin_details');
     }
     public function login(Request $request)
@@ -164,7 +223,7 @@ class AdminController extends Controller
                 'email.required' => 'Email is required.',
                 'email.email' => 'Email is not valid.',
                 'password.required' => 'Password is required.',
-                'password.min' => 'Password must be at least 6 characters.',
+                'password.min' => 'Password must be at least 8 characters.',
             ];
             $this->validate($request, $rules, $customMessages);
 
@@ -184,6 +243,35 @@ class AdminController extends Controller
             $anggota = Anggota::where('nama', $nama);
         } else {
             $anggota = $anggota->get()->toArray();
+        }
+        $admin = Auth::guard('admin')->user();
+
+        $anggota = Anggota::get();
+
+        foreach ($anggota as $anggotaItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->anggota_id', $anggotaItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                $notification = new OffersNotification($anggotaItem);
+
+                $admin->notify($notification);
+            }
+        }
+
+        $pemesanan = Pemesanan::get();
+        foreach ($pemesanan as $pemesananItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->pemesanan_id', $pemesananItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                // Membuat instance notifikasi dan memberikan data pemesanan
+                $notification = new PemesananPupukNotification($pemesananItem);
+
+                $admin->notify($notification);
+            }
         }
         return view('admin.view.listanggota')->with(compact('anggota'));
     }
@@ -251,59 +339,72 @@ class AdminController extends Controller
 
     public function profile()
     {
+        $admin = Auth::guard('admin')->user();
+
+        $anggota = Anggota::get();
+
+        foreach ($anggota as $anggotaItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->anggota_id', $anggotaItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                $notification = new OffersNotification($anggotaItem);
+
+                $admin->notify($notification);
+            }
+        }
+
+        $pemesanan = Pemesanan::get();
+        foreach ($pemesanan as $pemesananItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->pemesanan_id', $pemesananItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                // Membuat instance notifikasi dan memberikan data pemesanan
+                $notification = new PemesananPupukNotification($pemesananItem);
+
+                $admin->notify($notification);
+            }
+        }
         return view('admin.profile.profile');
     }
 
     public function daftarpemesanan()
     {
         $pemesanan = Pemesanan::get();
+        $admin = Auth::guard('admin')->user();
+
+        $anggota = Anggota::get();
+
+        foreach ($anggota as $anggotaItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->anggota_id', $anggotaItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                $notification = new OffersNotification($anggotaItem);
+
+                $admin->notify($notification);
+            }
+        }
+
+        $pemesanan = Pemesanan::get();
+        foreach ($pemesanan as $pemesananItem) {
+            $saveNotifications = $admin->notifications()
+                ->where('data->pemesanan_id', $pemesananItem->id)
+                ->first();
+
+            if (!$saveNotifications) {
+                // Membuat instance notifikasi dan memberikan data pemesanan
+                $notification = new PemesananPupukNotification($pemesananItem);
+
+                $admin->notify($notification);
+            }
+        }
         return view('admin.daftarpemesanan', compact('pemesanan'));
     }
-
-    // public function notify(Request $request)
-    // {
-    //     $admin = Admin::find(1);
-    //     $anggota = Anggota::get();
-    //     foreach ($anggota as $anggotaItem) {
-    //         $admin->notify(new OffersNotification($anggotaItem));
-    //     }
-    //     dd($anggota);
-    //     // Auth::guard('admin')->user()->unreadNotifications->when($request->input('id'),function($query) use ($request){
-    //     //     return $query->where('id', $request->input('id'));
-    //     // })->markasread();
-    // }
-    // public function notify(Request $request)
-    // {
-    //     $admin = Auth::guard('admin')->user();
-    //     $anggota = Anggota::get();
-
-    //     foreach ($anggota as $anggotaItem) {
-    //         // Check if a notification already exists for the specific anggota
-    //         $existingNotification = $admin->notifications()
-    //             ->where('data->anggota_id', $anggotaItem->id)
-    //             ->first();
-
-    //         if (!$existingNotification) {
-    //             // Create a new notification instance
-    //             $notification = new OffersNotification($anggotaItem);
-
-    //             // Save the notification to the admin user's notifications
-    //             $admin->notify($notification);
-    //         }
-    //     }
-
-    //     return redirect()->back();
-    // }
-    // public function markasread($id)
-    // {
-    //     if ($id) {
-    //         $notification = Auth::guard('admin')->user()->unreadNotifications->where('id', $id)->first();
-    //         if ($notification) {
-    //             $notification->markAsRead();
-    //         }
-    //     }
-    //     return redirect()->back();
-    // }
     public function markasread($id)
     {
         if ($id) {

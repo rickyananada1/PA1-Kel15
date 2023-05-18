@@ -11,8 +11,8 @@ use App\Models\Pemesanan;
 use App\Models\Pengumuman;
 use App\Models\Pupuk;
 use App\Notifications\PengumumanNotification;
-use Auth;
-use Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -76,16 +76,16 @@ class AnggotaController extends Controller
         return view('petani.setting.update_petani_password')->with(compact('petaniDetails'));
     }
 
-    public function checkPetaniPassword(Request $request)
-    {
-        $data = $request->all();
+    // public function checkPetaniPassword(Request $request)
+    // {
+    //     $data = $request->all();
 
-        if (Hash::check($data['current_password'], Auth::guard('petani')->user()->password)) {
-            return "true";
-        } else {
-            return "false";
-        }
-    }
+    //     if (Hash::check($data['current_password'], Auth::guard('petani')->user()->password)) {
+    //         return "true";
+    //     } else {
+    //         return "false";
+    //     }
+    // }
 
     public function UpdatePetaniDetails(Request $request)
     {
@@ -211,6 +211,11 @@ class AnggotaController extends Controller
             return redirect('petani/login')->with('success_message', 'Anggota Berhasil Didaftarkan');
         }
         return view('petani.register');
+    }
+
+    public function forgotpassword(Request $request)
+    {
+        return view ('petani.lupapassword');
     }
     public function pesan(Request $request)
     {

@@ -144,10 +144,6 @@
                                         </div>
                                         <a href="#" class="auth-link text-black">Lupa password?</a>
                                     </div>
-                                    <div class="text-center mt-4 font-weight-light">
-                                        Tidak Punya Akun? <a href="{{ url('/register') }}"
-                                            class="text-primary">Daftar</a>
-                                    </div>
                                 </form>
                             </div>
                         </div>
