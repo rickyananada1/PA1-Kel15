@@ -60,6 +60,7 @@
         });
     </script>
 @endpush
+
 @section('content')
     <table class="table">
         @if (session('success'))
@@ -110,11 +111,11 @@
                             @csrf
                             @method('DELETE')
                             @if ($item->status != 0)
-                                <button type="submit" class="btn btn-danger btn-sm delete" name="pesanan" status="{{$item->status}}" id="{{$item->id}}">Batalkan
-                                    Pesanan</button>
+                                <button type="button" class="btn btn-danger btn-sm delete" name="pesanan"
+                                    status="{{ $item->status }}" id="{{ $item->id }}">Batalkan Pesanan</button>
                             @else
-                                <button type="submit" class="btn btn-danger btn-sm delete" name="pesanan" id="{{$item->id}}" status="{{$item->status}}">Batalkan
-                                    Pesanan</button>
+                                <button type="button" class="btn btn-danger btn-sm delete" name="pesanan"
+                                    id="{{ $item->id }}" status="{{ $item->status }}">Batalkan Pesanan</button>
                             @endif
                         </form>
                     </td>

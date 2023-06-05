@@ -32,13 +32,12 @@ class PupukController extends Controller
     public function store(Request $request)
     {
         $validasi = [
-            'nama' => 'required|regex:/^[\pL\s\-]+$/u',
+            'nama' => 'required',
             'jenis' => 'required',
             'stok' => 'required|numeric',
         ];
         $message = [
             'nama.required' => 'Nama Harus Di Isi',
-            'nama.regex' => 'Nama Harus Berupa Huruf',
             'jenis.required' => 'Nama Harus Di Isi',
             'stok.required' => 'Stok Harus Di Isi',
         ];

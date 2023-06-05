@@ -13,6 +13,7 @@ use App\Models\Pupuk;
 use App\Notifications\OffersNotification;
 use App\Notifications\PemesananPupukNotification;
 use Auth;
+use Carbon\Carbon;
 use Hash;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -30,7 +31,6 @@ class AdminController extends Controller
         $admin = Auth::guard('admin')->user();
 
         $anggota = Anggota::get();
-
         foreach ($anggota as $anggotaItem) {
             $saveNotifications = $admin->notifications()
                 ->where('data->anggota_id', $anggotaItem->id)
@@ -50,7 +50,6 @@ class AdminController extends Controller
                 ->first();
 
             if (!$saveNotifications) {
-                // Membuat instance notifikasi dan memberikan data pemesanan
                 $notification = new PemesananPupukNotification($pemesananItem);
 
                 $admin->notify($notification);
@@ -287,7 +286,7 @@ class AdminController extends Controller
         }
         $data->save();
 
-        return redirect()->back()->with('message', $data['nama'] . 'Status Penggunna Berhasil Diganti');
+        return redirect()->back()->with('message', 'Status Anggota Berhasil Diganti');
     }
     public function statuspemesanan(Request $request, $id)
     {
@@ -362,7 +361,6 @@ class AdminController extends Controller
                 ->first();
 
             if (!$saveNotifications) {
-                // Membuat instance notifikasi dan memberikan data pemesanan
                 $notification = new PemesananPupukNotification($pemesananItem);
 
                 $admin->notify($notification);
@@ -410,7 +408,6 @@ class AdminController extends Controller
         if ($id) {
             Auth::guard('admin')->user()->notifications()->where('id', $id)->first()->markAsRead();
         }
-
         return redirect()->back();
     }
 
@@ -422,4 +419,19 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
+
+    public function delete($id)
+    {
+        $anggota = Anggota::find($id);
+
+        if (!$anggota) {
+            return redirect()->back()->with('error_message', 'Anggota tidak ditemukan.');
+        }
+
+        Pemesanan::where('anggota_id', $id)->delete();
+        $anggota->delete();
+
+        return redirect()->back()->with('success_message', 'Akun Anda Telah Di Hapus');
+    }
+
 }

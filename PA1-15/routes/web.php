@@ -17,7 +17,9 @@ use PhpParser\Node\Name;
 
 Route::get('/', [HomeController::class, 'welcome']);
 Route::get('/hasiltani', [HomeController::class, 'hasiltani']);
-Route::get('hasiltani/{id}', [HomeController::class, 'search']);
+Route::get('/pupuk', [HomeController::class, 'pupuk'])->middleware('Guest');
+Route::get('/aboutus', [HomeController::class, 'aboutus']);
+// Route::get('/contactus', [HomeController::class, 'contactus']);
 
 require __DIR__ . '/auth.php';
 
@@ -54,14 +56,16 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
         //Route status pemesanan
         Route::get('daftarpemesanan', 'AdminController@daftarpemesanan')->name('daftarpemesanan');
         Route::get('statuspemesanan/{id}', 'AdminController@statuspemesanan')->name('statuspemesanan');
+        //Route Delete Akun
+        Route::delete('akunanggota/{id}', 'AdminController@delete')->name('deleteakun');
     });
 });
 
 Route::prefix('/petani')->namespace('App\Http\Controllers\Anggota')->group(function () {
     //Petani Login Route
     Route::match (['get', 'post'], 'login', 'AnggotaController@login');
-    //Route Forgot Password
-    Route::match(['get', 'post'], 'lupa-password', 'AnggotaController@forgotpassword');
+    // //Route Forgot Password
+    // Route::match(['get', 'post'], 'lupa-password', 'AnggotaController@forgotpassword');
     Route::middleware(['petani'])->group(function () {
         Route::resource('kategori', 'KategoriController');
         Route::resource('hasiltani', 'HasilTaniController');
@@ -90,8 +94,6 @@ Route::prefix('/petani')->namespace('App\Http\Controllers\Anggota')->group(funct
         //Route Daftar Pesanan
         Route::get('daftarpesan', 'AnggotaController@daftarpesan')->name('listpesanan');
         Route::delete('daftarpesan/{id}', 'AnggotaController@deletepesan')->name('hapuspesanan');
-        //Route Delete Akun
-        Route::delete('akun', 'AnggotaController@delete')->name('deleteakun');
     });
     Route::match (['get', 'post'], 'register', 'AnggotaController@register');
 });

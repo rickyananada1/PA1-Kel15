@@ -185,12 +185,12 @@
                         <td>{{ $value->nama }}</td>
                         <td>{{ Str::limit($value->deskripsi, 25) }}</td>
                         <td>
-                            <form action="/admin/kategori/{{ $value->id }}" method="POST">
+                            <form action="/petani/kategori/{{ $value->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <a href="/admin/kategori/{{ $value->id }}" class="btn btn-success btn-sm"><i
+                                <a href="/petani/kategori/{{ $value->id }}" class="btn btn-success btn-sm"><i
                                         class="fas fa-eye"></i></a>
-                                <a href="/admin/kategori/{{ $value->id }}/edit"
+                                <a href="/petani/kategori/{{ $value->id }}/edit"
                                     class="btn btn-success btn-sm mr-3 ml-3"><i class="fas fa-edit"></i></a>
                                 <button type="submit" class="btn btn-danger btn-sm delete" name="{{ $value->nama }}"
                                     id="{{ $value->id }}"><i class="fas fa-trash"></i></button>

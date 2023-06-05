@@ -37,7 +37,7 @@
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-th"></i>
+                    <i class="fa fa-bars nav-icon" aria-hidden="true"></i>
                     <p>
                         Kategori
                         <i class="right fas fa-angle-left"></i>
@@ -47,20 +47,20 @@
                     <li class="nav-item">
                         <a href="/petani/kategori" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>List Kategori</p>
+                            <p>Daftar Kategori</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="/petani/kategori/create" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Add Kategori</p>
+                            <p>Tambah Kategori</p>
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-copy"></i>
+                    <i class="fa fa-th nav-icon"></i>
                     <p>
                         Hasil Tani
                         <i class="fas fa-angle-left right"></i>
@@ -70,22 +70,22 @@
                     <li class="nav-item">
                         <a href="/petani/hasiltani" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>List Hasil Tani</p>
+                            <p>Daftar Hasil Tani</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="/petani/hasiltani/create" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Add Hasil Tani</p>
+                            <p>Tambah Hasil Tani</p>
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-tree"></i>
+                    <i class="nav-icon fa fa-shopping-cart"></i>
                     <p>
-                        Order Pupuk
+                        Pemesanan Pupuk
                         <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
@@ -93,24 +93,33 @@
                     <li class="nav-item">
                         <a href="{{route('listpesanan')}}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Daftar Order</p>
+                            <p>Daftar Pesanan</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="/petani/pesan" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Order</p>
+                            <p>Pesan</p>
                         </a>
                     </li>
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="/petani/pengumuman" class="nav-link">
-                    <i class="nav-icon fas fa-edit"></i>
+                <a href="#" class="nav-link">
+                    <i class="fa fa-book nav-icon" aria-hidden="true"></i>
                     <p>
                         Pengumuman
+                        <i class="fas fa-angle-left right"></i>
                     </p>
                 </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/petani/pengumuman" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Daftar Pengumuman</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -124,7 +133,7 @@
                     <li class="nav-item">
                         <a href="/petani/profile" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Personal Data</p>
+                            <p>Data Diri</p>
                         </a>
                     </li>
                 </ul>
@@ -133,7 +142,7 @@
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-cog"></i>
                     <p>
-                        Settings
+                        Pengaturan
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
@@ -141,13 +150,13 @@
                     <li class="nav-item">
                         <a href="{{ url('petani/update-petani-password') }}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Setting Password</p>
+                            <p>Ubah Password</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ url('petani/update-petani-details') }}" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Setting Profile</p>
+                            <p>Ubah Profile</p>
                         </a>
                     </li>
                 </ul>

@@ -212,11 +212,6 @@ class AnggotaController extends Controller
         }
         return view('petani.register');
     }
-
-    public function forgotpassword(Request $request)
-    {
-        return view ('petani.lupapassword');
-    }
     public function pesan(Request $request)
     {
         if ($request->isMethod('post')) {
@@ -274,15 +269,6 @@ class AnggotaController extends Controller
             $pemesanan->delete();
             return redirect()->back()->with('success', 'Pemesanan berhasil dihapus.');
         }
-    }
-    public function delete()
-    {
-        $anggotaId = Auth::guard('petani')->user()->id;
-        Pemesanan::where('anggota_id', $anggotaId)->delete();
-        Anggota::find($anggotaId)->delete();
-
-        Auth::guard('petani')->logout();
-        return redirect('/petani/login')->with('success_message', 'Akun berhasil dihapus.');
     }
 
     public function pengumuman()

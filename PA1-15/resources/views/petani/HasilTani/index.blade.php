@@ -46,15 +46,22 @@
     </script>
 @endpush
 @section('content')
+    <style>
+        .card-img-top {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
     <div class="row">
         @forelse ($hasiltani as $item)
             <div class="col-3">
                 <div class="card">
                     <img src="{{ asset('image/' . $item->image) }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h2 class="card-text">Nama: {{ $item->nama }}</h2>
+                        <h4 class="card-text">Nama: {{ $item->nama }}</h4>
                         <h4 class="card-text">Harga: Rp{{ number_format($item->harga, 3) }}</h4>
-                        <p class="card-text">Keterangan: {{ Str::limit($item->deskripsi, 20) }}</p>
+                        <p class="card-text">Keterangan: {{ Str::limit($item->deskripsi, 10) }}</p>
                         <form action="/petani/hasiltani/{{ $item->id }}" method="POST">
                             @csrf
                             @method('DELETE')

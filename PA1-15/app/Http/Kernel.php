@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\Admin::class,
         'petani' => \App\Http\Middleware\Petani::class,
         'CheckAprroval' => \App\Http\Middleware\CheckAprroval::class,
+        'Guest' => \App\Http\Middleware\Guest::class,
     ];
 }

@@ -18,7 +18,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ route('anggota') }}" class="small-box-footer">Detail<i
+                        <a href="{{ route('anggota') }}" class="small-box-footer">Detail <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                             <p>Daftar Hasil Tani</p>
                         </div>
                         <div class="icon">
-                            <i class="ion ion-person-add"></i>
+                            <i class="ion ion-pie-graph"></i>
                         </div>
                         <a href="/admin/hasiltani" class="small-box-footer">Detail <i
                                 class="fas fa-arrow-circle-right"></i></a>
@@ -66,7 +66,7 @@
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="/admin/pupuk" class="small-box-footer">More info <i
+                        <a href="/admin/pupuk" class="small-box-footer">Detail <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                         <div class="icon">
                             <i class="ion ion-pie-graph"></i>
                         </div>
-                        <a href="/admin/daftarpemesanan" class="small-box-footer">More info <i
+                        <a href="/admin/daftarpemesanan" class="small-box-footer">Detail <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>

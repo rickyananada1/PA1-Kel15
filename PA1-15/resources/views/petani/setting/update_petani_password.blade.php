@@ -9,7 +9,6 @@
                 <div class="col grid-margin stretch-card">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Settings</h4>
                             <p class="card-description">
                                 Update Password
                             </p>

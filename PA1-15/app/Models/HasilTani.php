@@ -11,4 +11,9 @@ class HasilTani extends Model
     protected $table = 'hasiltani';
 
     protected $fillable = ['nama', 'image' ,'harga', 'deskripsi', 'kategori_id'];
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'id');
+    }
 }

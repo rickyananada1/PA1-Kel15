@@ -56,7 +56,8 @@ class PengumumanController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $pengumuman = Pengumuman::get();
+        return view('admin.pengumuman.read', compact('pengumuman'));
     }
 
     /**

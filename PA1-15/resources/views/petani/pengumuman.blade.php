@@ -7,6 +7,7 @@
         <div class="card">
             <div class="card-header">
                 {{ $item->nama }}
+                <span class="float-right">Dibuat: {{ $item->created_at->format('d/m/Y') }}</span>
             </div>
             <div class="card-body">
                 <blockquote class="blockquote mb-0 bg-gray">

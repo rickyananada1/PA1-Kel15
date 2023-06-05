@@ -17,7 +17,7 @@ class CheckAprroval
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::guard('petani')->check() && !Auth::guard('petani')->user()->status == 0) {
-            return redirect('/')->with('error', 'Akun Anda Belum di Setujui.');
+            return redirect('/')->with('error', 'Akun Anda Belum di Setujui oleh Admin.');
         }
         return $next($request);
     }

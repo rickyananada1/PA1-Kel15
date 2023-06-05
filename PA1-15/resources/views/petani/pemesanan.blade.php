@@ -34,9 +34,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Jenis Pupuk</label>
-            <select class="form-control" name="jenis_pupuk" id="jenis_pupuk" disabled required>
-                <option value="">--Pilih Jenis Pupuk--</option>
-            </select>
+            <input type="text" class="form-control" name="jenis_pupuk" id="jenis_pupuk" disabled required>
         </div>
         <div class="mb-3">
             <label class="form-label">Stok</label>
@@ -51,19 +49,19 @@
 
     <script>
         const namaPupukSelect = document.getElementById('nama_pupuk');
-        const jenisPupukSelect = document.getElementById('jenis_pupuk');
+        const jenisPupukInput = document.getElementById('jenis_pupuk');
 
         namaPupukSelect.addEventListener('change', function() {
             const selectedOption = this.options[this.selectedIndex];
             const jenisPupuk = selectedOption.getAttribute('data-jenis');
 
             if (jenisPupuk) {
-                jenisPupukSelect.innerHTML = `<option value="${jenisPupuk}">${jenisPupuk}</option>`;
-                jenisPupukSelect.disabled = false;
+                jenisPupukInput.value = jenisPupuk;
             } else {
-                jenisPupukSelect.innerHTML = '<option value="">--Pilih Jenis Pupuk--</option>';
-                jenisPupukSelect.disabled = true;
+                jenisPupukInput.value = '';
             }
         });
+
+        jenisPupukInput.disabled = true;
     </script>
 @endsection

@@ -80,9 +80,12 @@
                         <form action="/admin/pengumuman/{{ $item->id }}" method="POST">
                             @csrf
                             @method('DELETE')
+                            <a href="/admin/pengumuman/{{ $item->id }}" class="btn btn-primary btn-sm ml-3 mr-3"><i
+                                    class="fas fa-eye"></i></a>
                             <a href="/admin/pengumuman/{{ $item->id }}/edit" class="btn btn-primary btn-sm mr-3"><i
                                     class="fas fa-edit"></i></a>
-                            <button type="submit" class="btn btn-danger btn-sm delete" name="{{$item->nama}}" id="{{$item->id}}"><i class="fas fa-trash"></i></button>
+                            <button type="submit" class="btn btn-danger btn-sm delete" name="{{ $item->nama }}"
+                                id="{{ $item->id }}"><i class="fas fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>

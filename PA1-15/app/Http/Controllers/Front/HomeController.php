@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Anggota;
 use App\Models\HasilTani;
 use App\Models\Kategori;
+use App\Models\Pupuk;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -14,36 +15,40 @@ class HomeController extends Controller
     {
         $kategori = Kategori::select('nama', 'deskripsi')->get();
         $hasiltani = HasilTani::select('nama', 'image', 'harga', 'deskripsi')->get();
-        $anggota = Anggota::get();
-        return view('front.welcome', compact('kategori', 'hasiltani', 'anggota'));
+        return view('front.welcome', compact('kategori', 'hasiltani'));
     }
 
-    public function hasiltani(Request $request)
+    public function hasiltani(Request $request, )
     {
-        $kategori = Kategori::select('nama', 'deskripsi')->get();
-        $query = HasilTani::select('nama', 'image', 'harga', 'deskripsi');
+        $kategoriId = $request->input('kategori');
+        $hasiltani = HasilTani::query();
 
-        if ($request->has('kategori')) {
-            $kategoriId = $request->input('kategori');
-            $query->where('kategori_id', $kategoriId);
-            $kategori = Kategori::find($kategoriId);
+        if ($kategoriId) {
+            $hasiltani->where('kategori_id', $kategoriId);
         }
 
-        $hasiltani = $query->get();
-        $anggota = Anggota::get();
-
-        return view('front.HasilTani', compact('kategori', 'hasiltani', 'anggota'));
+        $hasiltani = $hasiltani->latest()->get();
+        $kategori = Kategori::all();
+        return view('front.HasilTani', compact('kategori', 'hasiltani'));
     }
 
-    public function search($id)
+    public function pupuk()
     {
-        $kategori = Kategori::find($id);
-        if (!$kategori) {
-            abort(404); // Menampilkan halaman 404 jika kategori tidak ditemukan
-        }
-        $hasiltani = HasilTani::where('kategori_id', $id)->latest()->get();
-        $anggota = Anggota::get();
-        return view('front.HasilTani', compact('kategori', 'hasiltani', 'anggota'));
+        $pupuk = Pupuk::paginate(5, ['*'], 'page')->onEachSide(1);
+        $kategori = Kategori::all();
+        return view('front.pupuk', compact('pupuk', 'kategori'));
+    }
+
+    public function aboutus()
+    {
+        $kategori = Kategori::all();
+        return view ('front.aboutus', compact('kategori'));
+    }
+
+    public function contactus()
+    {
+        $kategori = Kategori::all();
+        return view ('front.contactus', compact('kategori'));
     }
 
 }
