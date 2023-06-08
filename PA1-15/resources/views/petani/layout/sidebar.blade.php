@@ -99,7 +99,7 @@
                     <li class="nav-item">
                         <a href="/petani/pesan" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Pesan</p>
+                            <p>Tambah Pesanan</p>
                         </a>
                     </li>
                 </ul>

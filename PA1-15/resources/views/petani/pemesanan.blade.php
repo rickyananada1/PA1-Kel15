@@ -44,7 +44,7 @@
             <label class="form-label">Tanggal Pemesanan</label>
             <input type="date" class="form-control" name="tanggal" required>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Pesan</button>
     </form>
 
     <script>

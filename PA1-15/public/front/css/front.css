@@ -1,0 +1,162 @@
+        body {
+            background-color: #EDF1D6;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .info-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .info-card img {
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .info-card .card-body {
+            padding: 20px;
+        }
+
+        .info-card h5 {
+            margin-bottom: 10px;
+        }
+
+        .info-card p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .info-card .read-more {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .info-card:hover .read-more {
+            opacity: 1;
+        }
+
+        .info-card a {
+            color: #fff;
+            background-color: #183A1D;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .info-card .read-more a:hover {
+            background-color: #1f4a23;
+        }
+
+        /* New Styles */
+        .container-fluid {
+            margin-bottom: 40px;
+        }
+
+        .carousel-caption {
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .carousel-caption h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .carousel-caption h1.text-warning {
+            color: #FFC107;
+        }
+
+        .carousel-caption h1.text-white {
+            color: #fff;
+        }
+
+        .carousel-caption a.btn {
+            font-size: 1.25rem;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .carousel-caption a.btn-secondary {
+            background-color: #6C757D;
+        }
+
+        .additional-info {
+            margin-top: 50px;
+            margin-bottom: 30px;
+        }
+
+        .additional-info .row {
+            justify-content: center;
+        }
+
+        .additional-info .info-card {
+            max-width: 350px;
+            margin-bottom: 30px;
+            transform: translateY(0);
+        }
+
+        .additional-info .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .google-maps-section {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        .google-maps-section .card {
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+        }
+
+        .google-maps-section h1.display-4 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .google-maps-section hr {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .google-maps-section .card-body {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .google-maps-section .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .google-maps-section .card-text {
+            color: #666;
+        }
+
+        .google-maps-section .embed-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .google-maps-section .embed-responsive iframe {
+            border: none;
+        }

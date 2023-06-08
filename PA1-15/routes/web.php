@@ -46,7 +46,7 @@ Route::prefix('/admin')->namespace('App\Http\Controllers\Admin')->group(function
 
         //Update Admin Details
         Route::match (['get', 'post'], 'update-admin-details', 'AdminController@UpdateAdminDetails');
-        //view Anggota
+        //view Anggot
         Route::get('anggota/{nama?}', 'AdminController@anggota')->name('anggota');
         //Admin Logout
         Route::get('logout', 'AdminController@logout');

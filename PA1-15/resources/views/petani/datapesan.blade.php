@@ -1,12 +1,21 @@
 @extends('petani.layout.layout')
 @section('title')
-    Daftar Pemesanan Saya
+    Daftar Pesanan Saya
 @endsection
 @push('script')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
     <script>
+        $(document).ready(function() {
+            $("#search").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#table tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
         $(document).on('click', '.delete', function(e) {
             e.preventDefault();
             var id = $(this).attr('id');
@@ -62,69 +71,74 @@
 @endpush
 
 @section('content')
-    <table class="table">
-        @if (session('success'))
-            <div class="alert alert-danger">
-                {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
+    <div class="container">
+        <div class="form-group">
+            <input type="text" class="form-control" id="search" placeholder="Cari Pesanan">
+        </div>
+        <table class="table" id="table">
+            @if (session('success'))
+                <div class="alert alert-danger">
+                    {{ session('success') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
 
-        <thead>
-            <tr>
-                <th scope="col">No</th>
-                <th scope="col">Nama Pupuk</th>
-                <th scope="col">Jenis Pupuk</th>
-                <th scope="col">Stok</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($pemesanan as $key => $item)
+            <thead>
                 <tr>
-                    <td>{{ $key + 1 }}</td>
-                    <td>{{ $item->pupuk->nama }}</td>
-                    <td>{{ $item->pupuk->jenis }}</td>
-                    <td>{{ $item->stok }}/Kg</td>
-                    <td>
-                        @if ($item['status'] == 1)
-                            Disetujui
-                        @elseif ($item['status'] == 2)
-                            Ditolak
-                        @else
-                            Menunggu
-                        @endif
-                    </td>
-                    <td>
-                        <form action="{{ route('hapuspesanan', ['id' => $item->id]) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            @if ($item->status != 0)
-                                <button type="button" class="btn btn-danger btn-sm delete" name="pesanan"
-                                    status="{{ $item->status }}" id="{{ $item->id }}">Batalkan Pesanan</button>
+                    <th scope="col">No</th>
+                    <th scope="col">Nama Pupuk</th>
+                    <th scope="col">Jenis Pupuk</th>
+                    <th scope="col">Stok</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody id="table">
+                @forelse ($pemesanan as $key => $item)
+                    <tr>
+                        <td>{{ $key + 1 }}</td>
+                        <td>{{ $item->pupuk->nama }}</td>
+                        <td>{{ $item->pupuk->jenis }}</td>
+                        <td>{{ $item->stok }}/Kg</td>
+                        <td>
+                            @if ($item['status'] == 1)
+                                Disetujui
+                            @elseif ($item['status'] == 2)
+                                Ditolak
                             @else
-                                <button type="button" class="btn btn-danger btn-sm delete" name="pesanan"
-                                    id="{{ $item->id }}" status="{{ $item->status }}">Batalkan Pesanan</button>
+                                Menunggu
                             @endif
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td>Tidak Ada Data</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+                        </td>
+                        <td>
+                            <form action="{{ route('hapuspesanan', ['id' => $item->id]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                @if ($item->status != 0)
+                                    <button type="button" class="btn btn-danger btn-sm delete" name="pesanan"
+                                        status="{{ $item->status }}" id="{{ $item->id }}">Batalkan Pesanan</button>
+                                @else
+                                    <button type="button" class="btn btn-danger btn-sm delete" name="pesanan"
+                                        id="{{ $item->id }}" status="{{ $item->status }}">Batalkan Pesanan</button>
+                                @endif
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td>Tidak Ada Data</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
 @endsection

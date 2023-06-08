@@ -97,7 +97,10 @@
                         <div class="col-lg-4 mx-auto">
                             <div class="auth-form-light text-left py-5 px-4 px-sm-5">
                                 <div class="brand-logo">
-                                    <h2 class="text-success" style="font-family: verdana"; align="center">AGROMAJU</h2>
+                                    <h2 class="text-center" style="font-family: verdana;">
+                                        <a href="/" class="text-success"
+                                            style="text-decoration: none">AGROMAJU</a>
+                                    </h2>
                                 </div>
                                 @if (Session::has('error_message'))
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert">

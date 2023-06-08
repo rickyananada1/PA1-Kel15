@@ -256,7 +256,7 @@ class HasilTaniController extends Controller
 
         $hasiltani->update();
 
-        return redirect('/admin/hasiltani');
+        return redirect('/admin/hasiltani')->with('success', 'Hasil Tani Berhasil Diubah');
     }
 
     /**

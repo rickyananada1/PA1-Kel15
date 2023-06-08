@@ -1,6 +1,6 @@
 @extends('petani.layout.layout')
 @section('title')
-    Update Data Diri
+    Ubah Data Diri
 @endsection
 @section('content')
     <div class="main-panel">

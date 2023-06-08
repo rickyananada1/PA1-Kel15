@@ -35,7 +35,7 @@
             <div class="alert alert-danger">{{$message}}</div>
             @enderror
             <div class="mb-3">
-                <label for="kategori_id" class="form-label">Kategori_id</label>
+                <label for="kategori_id" class="form-label">Kategori</label>
                 <select name="kategori_id" id="" class="form-control">
                     <option value="">--Pilih Kategori--</option>
                     @forelse ($kategori as $items)
@@ -48,8 +48,7 @@
             @error('kategori_id')
             <div class="alert alert-danger">{{$message}}</div>
             @enderror
-            <button type="submit" class="btn btn-primary">Create</button>
-            <a href="/admin/hasiltani" class="btn btn-danger">Cancel</a>
+            <button type="submit" class="btn btn-primary">Tambah</button>
         </form>
     </div>
 @endsection

@@ -1,6 +1,6 @@
 @extends('admin.layout.layout')
 @section('title')
-    Edit Pupuk
+    Ubah Data Pupuk
 @endsection
 @section('content')
     <form action="/admin/pupuk/{{$pupuk->id}}" method="POST">
@@ -27,7 +27,7 @@
         @error('stok')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <button type="submit" class="btn btn-primary">Create</button>
-        <a href="/admin/pupuk" class="btn btn-danger">Cancel</a>
+        <button type="submit" class="btn btn-primary">Ubah</button>
+        <a href="/admin/pupuk" class="btn btn-danger">Batalkan</a>
     </form>
 @endsection

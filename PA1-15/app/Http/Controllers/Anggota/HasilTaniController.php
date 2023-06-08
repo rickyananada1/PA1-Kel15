@@ -133,7 +133,7 @@ class HasilTaniController extends Controller
 
         $hasiltani->update();
 
-        return redirect('/petani/hasiltani');
+        return redirect('/petani/hasiltani')->with('success', 'Hasil Tani Berhasil Diubah');
     }
 
     /**

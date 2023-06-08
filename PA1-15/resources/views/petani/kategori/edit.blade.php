@@ -1,6 +1,6 @@
 @extends('petani.layout.layout')
 @section('title')
-    Edit Kategori
+    Ubah Kategori
 @endsection
 @section('content')
 <div class="container d-block">
@@ -21,8 +21,8 @@
     @error('deskripsi')
     <div class="alert alert-danger">{{$message}}</div>
     @enderror
-    <button type="submit" class="btn btn-primary">Edit</button>
-    <a href="/petani/kategori" class="btn btn-danger bnt-sm">Cancel</a>
+    <button type="submit" class="btn btn-primary">Ubah</button>
+    <a href="/petani/kategori" class="btn btn-danger bnt-sm">Batalkan</a>
   </form>
 </div>
 @endsection

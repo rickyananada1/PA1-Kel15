@@ -59,7 +59,7 @@
                                 @error('confirm_password')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
-                                <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                                <button type="submit" class="btn btn-primary mr-2">Ubah</button>
                             </form>
                         </div>
                     </div>

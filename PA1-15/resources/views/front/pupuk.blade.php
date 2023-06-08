@@ -25,57 +25,19 @@
                     }
                 });
 
-                // Reset pagination links to the first page with the search term
-                paginationLinks.forEach(function(link) {
-                    let href = link.getAttribute('href');
-                    if (href.includes('?')) {
-                        href += '&search=' + searchTerm;
-                    } else {
-                        href += '?search=' + searchTerm;
-                    }
-                    link.setAttribute('href', href);
-                });
             });
         });
     </script>
 @endpush
 
 @push('css')
+<link rel="stylesheet" href="{{asset('front/css/pupuk.css')}}">
     <style>
         #main-container {
             background-image: url("front/img/bckpupuk1.jpg");
             background-size: cover;
             background-position: center;
             color: orange;
-        }
-
-        .table-container {
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            animation: slideIn 0.5s ease-in-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .form-control {
-            border-radius: 5px;
-        }
-
-        .input-group-text {
-            background-color: #D8D8D8;
-            border: none;
         }
     </style>
 @endpush
@@ -108,7 +70,7 @@
                             <td>{{ ($pupuk->currentPage() - 1) * $pupuk->perPage() + $loop->iteration }}</td>
                             <td>{{ $item->nama }}</td>
                             <td>{{ $item->jenis }}</td>
-                            <td>{{ $item->stok }}/Kg</td>
+                            <td>{{ $item->stok }}Kg</td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -1,6 +1,6 @@
 @extends('petani.layout.layout')
 @section('title')
-    Update Password
+    Ubah Password
 @endsection
 @section('content')
     <div class="main-panel">

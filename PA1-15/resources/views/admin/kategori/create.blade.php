@@ -20,8 +20,7 @@
     @error('deskripsi')
     <div class="alert alert-danger">{{$message}}</div>
     @enderror
-    <button type="submit" class="btn btn-primary">Create</button>
-    <a href="/admin/kategori" class="btn btn-danger bnt-sm">Cancel</a>
+    <button type="submit" class="btn btn-primary">Tambah</button>
   </form>
 </div>
 @endsection

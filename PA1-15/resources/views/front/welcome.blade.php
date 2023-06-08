@@ -1,47 +1,22 @@
 @extends('front.layout')
-@push('js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
-        crossorigin="anonymous"></script>
-    <script>
-        function showProductDetails(image, title, description) {
-            Swal.fire({
-                title: title,
-                html: description,
-                imageUrl: image,
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'Custom image',
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const eyeButtons = document.querySelectorAll('.btn-action');
-            eyeButtons.forEach(function(button) {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const productItem = this.closest('.product-item');
-                    const image = productItem.querySelector('img').getAttribute('src');
-                    const title = productItem.querySelector('h6').textContent;
-                    const description = productItem.querySelector('.full-description').textContent;
-
-                    showProductDetails(image, title, description);
-                });
-            });
-        });
-    </script>
+@push('css')
+    <link rel="stylesheet" href="{{ asset('front/css/front.css') }}">
 @endpush
 @section('content')
     <!-- Carousel Start -->
     @if (Session::has('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Error: </strong> {{ Session::get('error') }}
-    </div>
-@endif
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error:</strong> {{ Session::get('error') }}
+        </div>
+    @endif
+
     <div class="container-fluid p-0">
         <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
+                <!-- Carousel Items -->
+
+                <!-- Carousel Item 1 -->
+                <div class="carousel-item active" style="height: 700px">
                     <img class="w-100" src="{{ asset('front/img/Home.jpg') }}" alt="Image">
                     <div
                         class="carousel-caption top-0 bottom-0 start-0 end-0 d-flex flex-column align-items-center justify-content-center">
@@ -49,39 +24,43 @@
                             <h1 class="text-warning">AgroMaju</h1>
                             <h1 class="display-1 text-white mb-md-4">Pertanian Untuk Hasil Tani yang Berkualitas dan juga
                                 lebih baik</h1>
-                            <a href="/aboutus" class="btn py-md-3 px-md-5 me-3" style="background-color:#183A1D">Explore</a>
-                            <a href="/contactus" class="btn btn-secondary py-md-3 px-md-5">Contact</a>
+                            <a href="#footer" class="btn btn-secondary py-md-3 px-md-5">Kontak Kami</a>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item">
+                <!-- End of Carousel Item 1 -->
+
+                <!-- Carousel Item 2 -->
+                <div class="carousel-item" style="height: 700px">
                     <img class="w-100" src="{{ asset('front/img/Home1.jpg') }}" alt="Image" height="918px">
                     <div
                         class="carousel-caption top-0 bottom-0 start-0 end-0 d-flex flex-column align-items-center justify-content-center">
                         <div class="text-start p-5" style="max-width: 900px;">
-                            <h1 class="text-warning">Kelompok Tani Maju</h1>
-                            <h1 class="display-1 text-white mb-md-4">Kelompok Pertanian yang memiliki tujuan untuk
-                                menghasilkan pertanian yang baik</h1>
-                            <a href="/aboutus" class="btn py-md-3 px-md-5 me-3" style="background-color:#183A1D">Explore</a>
-                            <a href="/contactus" class="btn btn-secondary py-md-3 px-md-5">Contact</a>
+                            <h1 class="text-warning">AgroMaju</h1>
+                            <h1 class="display-1 text-white mb-md-4">Membantu Pertanian Lebih Produktif</h1>
+                            <a href="#footer" class="btn btn-secondary py-md-3 px-md-5">Kontak Kami</a>
                         </div>
                     </div>
                 </div>
-                <div class="carousel-item">
+                <!-- End of Carousel Item 2 -->
+
+                <!-- Carousel Item 3 -->
+                <div class="carousel-item" style="height: 700px">
                     <img class="w-100" src="{{ asset('front/img/Home2.jpg') }}" alt="Image" height="918px">
                     <div
                         class="carousel-caption top-0 bottom-0 start-0 end-0 d-flex flex-column align-items-center justify-content-center">
                         <div class="text-start p-5" style="max-width: 900px;">
-                            <h1 class="text-warning">Kelompok Tani Maju</h1>
-                            <h1 class="display-1 text-white mb-md-4">Kelompok Pertanian yang memiliki tujuan untuk
-                                menghasilkan pertanian yang baik</h1>
-                            <a href="/aboutus" class="btn py-md-3 px-md-5 me-3"
-                                style="background-color: #183A1D">Explore</a>
-                            <a href="/contactus" class="btn btn-secondary py-md-3 px-md-5">Contact</a>
+                            <h1 class="text-warning">AgroMaju</h1>
+                            <h1 class="display-1 text-white mb-md-4">Meningkatkan Kualitas Hasil Pertanian dan Pupuk</h1>
+                            <a href="#footer" class="btn btn-secondary py-md-3 px-md-5">Kontak Kami</a>
                         </div>
                     </div>
                 </div>
+                <!-- End of Carousel Item 3 -->
+
+                <!-- End of Carousel Items -->
             </div>
+            <!-- Carousel Controls -->
             <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
@@ -90,166 +69,159 @@
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
+            <!-- End of Carousel Controls -->
         </div>
     </div>
     <!-- Carousel End -->
 
-    <hr>
-
-    <!-- News Start -->
-    <section class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="news-item">
-                        <img class="w-50" src="{{ asset('front/img/pupuk.jpg') }}" alt="News Image" class="img-fluid">
-                        <div class="news-content">
-                            <h3 class="news-title">Pemesanan Pupuk</h3>
-                            <p class="news-description">Pemesanan pupuk menjadi lebih mudah dengan adanya platform online
-                                kami. Dapatkan pupuk berkualitas dengan harga terjangkau. Pesan sekarang dan tingkatkan
-                                hasil pertanian Anda.</p>
-                        </div>
+    <!-- Additional Farming Information -->
+    <div class="container mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="info-card">
+                    <img src="{{ asset('front/img/bckpupuk.jpg') }}" alt="Farming 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Cara Meningkatkan Hasil Panen</h5>
+                        <p class="card-text">Untuk meningkatkan hasil panen, Anda perlu merencanakan dengan matang seluruh
+                            siklus pertanian, memilih varietas tanaman yang tepat, mempersiapkan tanah dengan baik,
+                            memberikan pemupukan yang tepat, mengendalikan hama dan penyakit, menggunakan irigasi yang
+                            efisien, melakukan penyiangan dan pemangkasan, memanen pada waktu yang tepat, terus meningkatkan
+                            pengetahuan, dan melakukan pemantauan dan evaluasi secara teratur.
+                        </p>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="news-item">
-                        <img class="w-100" src="{{ asset('front/img/hasiltani.jpg') }}" alt="News Image" class="img-fluid"
-                            height="320px">
-                        <div class="news-content">
-                            <h3 class="news-title">Pengenalan Hasil Tani Unggulan</h3>
-                            <p class="news-description">Kami memperkenalkan hasil tani unggulan yang dihasilkan oleh
-                                petani-petani terbaik. Dapatkan produk-produk berkualitas tinggi dengan rasa dan nutrisi
-                                yang terjaga. Jelajahi produk-produk kami sekarang.</p>
-                        </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-card">
+                    <img src="{{ asset('front/img/bckpupuk.jpg') }}" alt="Farming 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Pengendalian Hama dan Penyakit</h5>
+                        <p class="card-text">Pengendalian hama dan penyakit merupakan langkah penting dalam meningkatkan
+                            hasil panen. Hama dan penyakit dapat merusak tanaman dan mengurangi produktivitas. Untuk
+                            mengendalikan hama, dapat dilakukan dengan menggunakan metode pengendalian hayati, seperti
+                            memanfaatkan musuh alami hama, atau menggunakan pestisida nabati yang lebih ramah
+                            lingkungan.Dengan pengendalian hama dan penyakit yang efektif.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="info-card">
+                    <img src="{{ asset('front/img/bckpupuk.jpg') }}" alt="Farming 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Teknologi Terkini dalam Pertanian</h5>
+                        <p class="card-text">Teknologi terkini dalam pertanian, seperti pertanian presisi, Internet of
+                            Things (IoT), dan penggunaan drone, telah mengubah cara kita mengelola pertanian. Pertanian
+                            presisi memungkinkan pengelolaan lahan yang lebih akurat, sementara IoT memungkinkan pemantauan
+                            kondisi lingkungan secara real-time. Penggunaan drone membantu dalam pemetaan lahan dan inspeksi
+                            tanaman. Dengan teknologi ini, petani dapat mengoptimalkan penggunaan SDA.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- News End -->
-
-    <hr>
-    <br>
+    </div>
+    <!-- End of Additional Farming Information -->
 
 
-    <!-- About Start -->
-    <section class="section">
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-lg-6">
-                    <h2 class="section-title">Tentang Kami</h2>
-                    <p class="text-dark">Sektor pertanian merupakan sektor ekonomi yang vital di Indonesia. Hal ini karena
-                        keuntungan
-                        geografis dan lahan subur yang memungkinkan pertanian menjadi mata pencaharian utama bagi
-                        sebagian besar penduduk.
-                        Mengembangkan website Agromaju bertujuan untuk mendukung pertumbuhan dan kemajuan sektor
-                        pertanian di negara ini.Meskipun penting, banyak kelompok tani di Indonesia masih menghadapi
-                        kendala akses terhadap informasi yang diperlukan.
-                        Website Agromaju memberikan solusi untuk masalah ini dengan menyediakan informasi pertanian
-                        yang relevan, seperti teknik bercocok tanam, penggunaan pupuk, dan berita terbaru dalam industri
-                        pertanian. Website Agromaju juga berfungsi sebagai platform komunikasi antara kelompok tani dan
-                        ketua kelompok. Hal ini membantu dalam menyampaikan pengumuman, arahan, atau informasi
-                        penting lainnya yang berkaitan dengan kegiatan kelompok tani.</p>
-                    <p class="text-dark">Dengan adanya platform ini, keterhubungan antara kelompok tani dapat ditingkatkan.
-                        Dengan
-                        menyediakan informasi dan pengumuman melalui website, kelompok tani dapat memperoleh akses
-                        yang lebih cepat dan mudah terhadap informasi yang mereka butuhkan.<a class="text-info"
-                            href="/aboutus">Baca Selengkapnya...</a> </p>
+
+    <!-- Additional Text Section -->
+    <div class="container additional-text-section">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="text-center text-dark">
+                    <h2>Informasi Pengolahan Hasil Tani</h2>
+                    <hr>
+                    <p>di indonesia pada saat panen, hasil pertanian Petani seperti sayur-sayuran, buah-buahan, umbi-umbian
+                        dan serealia banyak mengalami kerusakan sebelum dikonsumsi, hal ini dikarenakan hasil panen yang
+                        melimpah hanya dijual oleh Petani dalam bentuk segar saja tanpa ada proses penangan yang baik.
+                        penanganan yang tidak benar dan tidak tepat dapat mengakibatkan kerusakan /kerugian yang cukup
+                        tinggi karena sifat hasil pertanian yang mudah rusak terutama untuk golongan buah dan sayuran (
+                        sekitar 30 – 40 % ). Hal ini juga menyebababkan hasil penjualan dari hasil pertanian tersebut tidak
+                        maksimal.
+                    </p>
+                    <p>mengingat pentingnya peranan hasil-hasil pertanian tersebut di dalam kehidupan manusia, maka untuk
+                        mengurangi jumlah kerusakan tersebut serta menambah nilai jual dari hasil pertanian maka diperlukan
+                        penanganan yang benar dan tepat salah satunya yaitu teknik pengolahan.
+                    </p>
+                    <p>Proses pengolahan adalah proses pembuatan bahan dari bahan mentah/segar menjadi produk-produk guna
+                        memenuhi kebutuhan manusia baik secara Fisik, Kimiawi maupun biokimiawi. Adapun perlakuan dalam
+                        proses pengolahan hasil pertanian melingkupi beberapa proses diantaranya Penanganan bahan,
+                        pembersihan, pemisahan, sortasi, pemanasan dengan suhu tinggi, pendinginan dan pembekuan,
+                        pengeringan, pengentalan, pengkristalan, ekstraksi, distilasi,penggilingan, pencampuran,
+                        pengemasan,penyimpanan dan penggudangan
+                    </p>
+                    <p>
+                        Dengan teknik pengolahan di harapkan dapat menekan kerusakan hasil pertanian petani dan dapat
+                        memperoleh nilai tambah yang jauh lebih besar serta dapat menghasilkan produk-produk pertanian dari
+                        komuditas lokal.
+                    </p>
                 </div>
-                <div class="col-lg-6">
-                    <img src="{{ asset('front/img/aboutus.jpg') }}" alt="About Us" class="img-fluid">
+            </div>
+            <div class="col-md-6">
+                <div class="text-center text-dark">
+                    <h2>Informasi Teknik Pembuatan Pupuk</h2>
+                    <hr>
+                    <p>Kelangkaan pupuk kimia (Anorganik) sering kali membuat kita kebingungan untuk melakukan usaha budi
+                        daya tanaman , baik tanaman pangan maupun tanaman hortikultura ( sayur sayuran ) sehingga sering
+                        kali produksi yang dihasilkan tidak sesuai dengan yang di inginkan karena tanaman kekurangan unsur
+                        hara yang dibutuhkan.
+                    </p>
+                    <p>Jika kita melihat sekeliling lingkungan tempat tinggal kita banyak sekali sampah organik bertebaran
+                        dimana mana sehingga menimbulkan kesan yang kurang sehat. Hal ini disebabkan karena kurangnya
+                        tingkat kesadaran kita terhadap kebersihan lingkungan serta belum tau manfaat dari sampah organik
+                        tersebut setelah diproses menjadi pupuk organik.
+                    </p>
+                    <p>Dilahan sawah banyak petani yang masih belum memahami manfaat dari limbah jerami setelah habis panen.
+                        Sebagian besar petani senang membakar limbah jeraminya setelah selesai panen, dengan alasan
+                        jeraminya akan mengganggu pada saat pengolahan tanah . Masyarakat tani kurang memahami bahwa
+                        sebenarnya dalam satu hektar lahan sawah akan diperoleh lebih kurang 7- 8 ton jerami segar.
+                    </p>
+                    <p>
+                        Menurut hasil penelitian menyebutkan bahwa dari 1 ton kompos jerami yang sudah diolah menjadi pupuk
+                        organik , setara dengan 41,3 kg Urea, 5,6 kg SP 36 dan 89,17 kg KCL Bisa kita bayangkan , berapa
+                        banyak pupuk yang kita buang percuma jika jerami hasil panen kita bakar.
+                    </p>
+                    <p>
+                        Pupuk organik dari limbah pertanian ,dewasa ini banyak dijadikan bahan pembicaraan hampir disemua
+                        kalangan , baik pemerintah , pelaku utama, pelaku usaha dan konsumen.
+                    </p>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- About End -->
+    </div>
+    <!-- End of Additional Text Section -->
 
 
-    <!-- Services Start -->
-    <!-- Services End -->
-
-
-    <!-- Features Start -->
-    <!-- Features Start -->
-
-
-    <!-- Products Start -->
-    <div class="container-fluid py-5">
+    <!-- Google Maps Section -->
+    <div class="container google-maps-section">
         <div class="container">
-            <div class="mx-auto text-center mb-5" style="max-width: 500px;">
-                <h6 class="text-primary text-uppercase">Hasil Tani</h6>
-                <h1 class="display-5">Hasil Tani Kami</h1>
-            </div>
-            <div class="owl-carousel product-carousel px-5">
-                @foreach ($hasiltani as $item)
-                    <div class="pb-5">
-                        <div class="product-item position-relative bg-white d-flex flex-column text-center">
-                            <img class="img-fluid mb-4" src="{{ asset('image/' . $item->image) }}" alt="">
-                            <h6 class="mb-3">{{ $item->nama }}</h6>
-                            <h5 class="text-primary mb-2">Rp{{ number_format($item->harga, 3) }}</h5>
-                            <p class="text-gray">{{ Str::limit($item->deskripsi, 10) }}</p>
-                            <p class="full-description" style="display: none;">{{ $item->deskripsi }}</p>
-                            <div class="btn-action d-flex justify-content-center">
-                                <a class="btn bg-secondary py-2 px-3" href=""><i
-                                        class="bi bi-eye text-white"></i></a>
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <h1 class="display-4 text-center">Lokasi AgroMaju</h1>
+                        <hr>
+                        <div class="card-body">
+                            <!-- Informasi Alamat -->
+                            <h5 class="card-title">Alamat:</h5>
+                            <p class="card-text">Sosor Sihobuk, Pangombusan</p>
+                            <!-- Informasi Email -->
+                            <h5 class="card-title">Email:</h5>
+                            <p class="card-text">admin@gmail.com</p>
+                            <!-- Informasi Nomor Telepon -->
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Lokasi Terkini:</h5>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item"
+                                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d63777.295704003984!2d99.1926741!3d2.4801401!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x303201d908a47355%3A0x53d7644c1ab82e10!2sPangombusan%2C%20Kec.%20Parmaksian%2C%20Toba%2C%20Sumatera%20Utara!5e0!3m2!1sid!2sid!4v1686146184884!5m2!1sid!2sid"
+                                    allowfullscreen="" width="100%" height="400px" loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"></iframe>
                             </div>
                         </div>
                     </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-    <!-- Products End -->
-
-
-    <!-- Testimonial Start -->
-
-    <!-- Testimonial End -->
-
-
-    <!-- Team Start -->
-
-
-
-    <!-- Team End -->
-
-
-    <!-- Blog Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="mx-auto text-center mb-5" style="max-width: 500px;">
-                <h6 class="text-primary text-uppercase">Blog Kegiatan</h6>
-                <h1 class="display-5">Kegiatan Dalam Petanian AgroMaju</h1>
-            </div>
-            <div class="row g-5">
-                <div class="col-lg-4">
-                    <div class="blog-item position-relative overflow-hidden">
-                        <img class="img-fluid" src="{{ asset('front/img/blog-1.jpg') }}" alt="">
-                        <a class="blog-overlay" href="">
-                            <h4 class="text-white">Petani menanam padi</h4>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="blog-item position-relative overflow-hidden">
-                        <img class="img-fluid" src="{{ asset('front/img/blog-2.jpg') }}" alt="">
-                        <a class="blog-overlay" href="">
-                            <h4 class="text-white">Menghasilkan Hasil Tani yang berkualitas</h4>
-                            {{-- <span class="text-white fw-bold">Jan 01, 2050</span> --}}
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="blog-item position-relative overflow-hidden">
-                        <img class="img-fluid" src="{{ asset('front/img/blog-3.jpg') }}" alt="">
-                        <a class="blog-overlay" href="">
-                            <h4 class="text-white">Siap untuk memperkenalkan Hasil Tani</h4>
-                            {{-- <span class="text-white fw-bold">Jan 01, 2050</span> --}}
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Blog End -->
+    <!-- End of Google Maps Section -->
 @endsection

@@ -190,11 +190,11 @@
                             @csrf
                             @method('DELETE')
                             @if ($value['status'] == 1)
-                                <a href="#" class="btn btn-info btn-sm approve" data-id="{{ $value['id'] }}">Terima</a>
+                                <a href="#" class="btn btn-success btn-sm approve" data-id="{{ $value['id'] }}">Terima</a>
                             @elseif ($value['status'] == 0)
                                 <a href="#" class="btn btn-danger btn-sm reject" data-id="{{ $value['id'] }}">Tolak</a>
                             @endif
-                            <button type="submit" class="btn btn-danger btn-sm delete" data-id="{{ $value['id'] }}"><i
+                            <button type="submit" class="btn btn-sm delete ml-4" style="background-color: #ED2B2A" data-id="{{ $value['id'] }}"><i
                                     class="fas fa-trash"> Hapus
                                     Akun</i></button>
                         </form>

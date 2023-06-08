@@ -18,7 +18,7 @@
                 <span
                     class="badge badge-warning navbar-badge">{{ Auth::guard('petani')->user()->unreadNotifications->count() }}</span>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu dropdown-menu-right">
                 <span class="dropdown-item dropdown-header">
                     {{ Auth::guard('petani')->user()->unreadNotifications->count() }} Notifications</span>
                 <div class="dropdown-divider"></div>

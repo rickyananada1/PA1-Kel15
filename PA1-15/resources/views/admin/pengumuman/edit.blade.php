@@ -1,6 +1,6 @@
 @extends('admin.layout.layout')
 @section('title')
-    Edit Pengumuman
+    Ubah Pengumuman
 @endsection
 @section('content')
     <form action="/admin/pengumuman/{{$pengumuman->id}}" method="POST">
@@ -20,7 +20,7 @@
         @error('isi')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <button type="submit" class="btn btn-info">Tambahkan</button>
+        <button type="submit" class="btn btn-info">Ubah</button>
         <a href="/admin/pengumuman" class="btn btn-danger">Kembali</a>
     </form>
 @endsection

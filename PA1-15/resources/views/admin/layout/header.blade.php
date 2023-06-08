@@ -19,62 +19,64 @@
                     {{ Auth::guard('admin')->user()->unreadNotifications->count() }}
                 </span>
             </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu dropdown-menu-right">
                 <span class="dropdown-item dropdown-header">
                     {{ Auth::guard('admin')->user()->unreadNotifications->count() }} Notifikasi
                 </span>
                 <div class="dropdown-divider"></div>
                 @forelse (Auth::guard('admin')->user()->unreadNotifications as $item)
                     @if ($item->type === 'App\Notifications\OffersNotification')
-                        <a href="/admin/anggota" class="dropdown-item bg-lg">
-                            <i class="fa fa-check mr-2" aria-hidden="true"></i> {{ $item->data['nama'] }}
-                            Melakukan Pendaftaran
-                            <span class="float-end text-muted text-sm" style="word-wrap: break-word">
-                                @if ($item->created_at->diffInSeconds() < 60)
-                                    {{ $item->created_at->diffInSeconds() }} detik
-                                @elseif ($item->created_at->diffInMinutes() < 60)
-                                    {{ $item->created_at->diffInMinutes() }} menit
-                                @elseif ($item->created_at->diffInHours() < 24)
-                                    {{ $item->created_at->diffInHours() }} jam
-                                @else
-                                    {{ $item->created_at->diffInDays() }} hari
-                                @endif
-                            </span>
-                        </a>
-                        <a href="{{ route('tandai', $item->id) }}" class="float-right text-muted text-sm">Tandai Sudah
-                            Dibaca</a>
+                        <div class="notification-item">
+                            <a href="/admin/anggota" class="dropdown-item bg-lg">
+                                <i class="fa fa-check mr-2" aria-hidden="true"></i> {{ $item->data['nama'] }}
+                                Melakukan Pendaftaran
+                                <span class="float-end text-muted text-sm" style="word-wrap: break-word">
+                                    @if ($item->created_at->diffInSeconds() < 60)
+                                        {{ $item->created_at->diffInSeconds() }} detik
+                                    @elseif ($item->created_at->diffInMinutes() < 60)
+                                        {{ $item->created_at->diffInMinutes() }} menit
+                                    @elseif ($item->created_at->diffInHours() < 24)
+                                        {{ $item->created_at->diffInHours() }} jam
+                                    @else
+                                        {{ $item->created_at->diffInDays() }} hari
+                                    @endif
+                                </span>
+                            </a>
+                            <a href="{{ route('tandai', $item->id) }}" class="float-right text-muted text-sm">Tandai Sudah Dibaca</a>
+                        </div>
                         <div class="dropdown-divider"></div>
                     @elseif ($item->type === 'App\Notifications\PemesananPupukNotification')
-                        <a href="/admin/daftarpemesanan" class="dropdown-item bg-lg">
-                            <i class="fa fa-check mr-2" aria-hidden="true"></i> {{ $item->data['nama'] }} Melakukan
-                            Pemesanan
-                            <span class="float-end text-muted text-sm" style="word-wrap: break-word">
-                                @if ($item->created_at->diffInSeconds() < 60)
-                                    {{ $item->created_at->diffInSeconds() }} detik
-                                @elseif ($item->created_at->diffInMinutes() < 60)
-                                    {{ $item->created_at->diffInMinutes() }} menit
-                                @elseif ($item->created_at->diffInHours() < 24)
-                                    {{ $item->created_at->diffInHours() }} jam
-                                @else
-                                    {{ $item->created_at->diffInDays() }} hari
-                                @endif
-                            </span>
-                        </a>
-                        <a href="{{ route('tandaisudahdibaca', $item->id) }}"
-                            class="float-right text-muted text-sm">Tandai Sudah Dibaca</a>
+                        <div class="notification-item">
+                            <a href="/admin/daftarpemesanan" class="dropdown-item bg-lg">
+                                <i class="fa fa-check mr-2" aria-hidden="true"></i> {{ $item->data['nama'] }} Melakukan Pemesanan
+                                <span class="float-end text-muted text-sm" style="word-wrap: break-word">
+                                    @if ($item->created_at->diffInSeconds() < 60)
+                                        {{ $item->created_at->diffInSeconds() }} detik
+                                    @elseif ($item->created_at->diffInMinutes() < 60)
+                                        {{ $item->created_at->diffInMinutes() }} menit
+                                    @elseif ($item->created_at->diffInHours() < 24)
+                                        {{ $item->created_at->diffInHours() }} jam
+                                    @else
+                                        {{ $item->created_at->diffInDays() }} hari
+                                    @endif
+                                </span>
+                            </a>
+                            <a href="{{ route('tandaisudahdibaca', $item->id) }}" class="float-right text-muted text-sm">Tandai Sudah Dibaca</a>
+                        </div>
                         <div class="dropdown-divider"></div>
                     @endif
                 @empty
-                    <a href="#" class="dropdown-item">
-                        <i class="fa fa-check mr-2" aria-hidden="true"></i> Tidak Ada Notifikasi
-                    </a>
+                    <div class="notification-item">
+                        <a href="#" class="dropdown-item">
+                            <i class="fa fa-check mr-2" aria-hidden="true"></i> Tidak Ada Notifikasi
+                        </a>
+                    </div>
                     <div class="dropdown-divider"></div>
                 @endforelse
             </div>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-user"></i>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

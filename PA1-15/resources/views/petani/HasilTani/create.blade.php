@@ -48,8 +48,7 @@
             @error('kategori_id')
             <div class="alert alert-danger">{{$message}}</div>
             @enderror
-            <button type="submit" class="btn btn-primary">Create</button>
-            <a href="/petani/hasiltani" class="btn btn-danger">Cancel</a>
+            <button type="submit" class="btn btn-primary">Tambah</button>
         </form>
     </div>
 @endsection

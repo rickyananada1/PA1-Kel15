@@ -13,12 +13,12 @@ class HomeController extends Controller
 {
     public function welcome()
     {
-        $kategori = Kategori::select('nama', 'deskripsi')->get();
-        $hasiltani = HasilTani::select('nama', 'image', 'harga', 'deskripsi')->get();
+        $kategori = Kategori::get();
+        $hasiltani = HasilTani::get();
         return view('front.welcome', compact('kategori', 'hasiltani'));
     }
 
-    public function hasiltani(Request $request, )
+    public function hasiltani(Request $request)
     {
         $kategoriId = $request->input('kategori');
         $hasiltani = HasilTani::query();
@@ -31,7 +31,6 @@ class HomeController extends Controller
         $kategori = Kategori::all();
         return view('front.HasilTani', compact('kategori', 'hasiltani'));
     }
-
     public function pupuk()
     {
         $pupuk = Pupuk::paginate(5, ['*'], 'page')->onEachSide(1);

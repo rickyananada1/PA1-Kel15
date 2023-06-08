@@ -77,7 +77,7 @@ class PupukController extends Controller
     public function update(Request $request, string $id)
     {
         $validasi = [
-            'nama' => 'required|regex:/^[\pL\s\-]+$/u',
+            'nama' => 'required',
             'jenis' => 'required',
             'stok' => 'required|numeric',
         ];

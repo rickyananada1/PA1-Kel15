@@ -17,7 +17,6 @@
                 </div>
             </div>
             <a href="/aboutus" class="nav-item nav-link">Tentang Kami</a>
-            {{-- <a href="/contactus" class="nav-item nav-link">Kontak</a> --}}
             @if (!Auth::guard('admin')->check() && !Auth::guard('petani')->check())
                 <a href="petani/login" class="nav-item nav-link">Login Anggota</a>
             @endif

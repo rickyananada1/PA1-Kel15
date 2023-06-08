@@ -50,6 +50,7 @@
     </script>
 @endpush
 @push('css')
+    <link rel="stylesheet" href="{{ asset('front/css/hasiltani.css') }}">
     <style>
         #main-container {
             background-image: url("front/img/aboutus.jpg");
@@ -57,42 +58,9 @@
             background-position: center;
             color: white;
         }
-
-        .card {
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        .btn-action {
-            text-align: center;
-        }
-
-        /* Animasi tambahan */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        .card {
-            animation: fadeIn 1s ease-in-out;
-        }
     </style>
 @endpush
 @section('content')
-    <!-- Hero Start -->
-    <!-- Hero End -->
-    <!-- Products Start -->
     <div class="container-fluid py-5" id="main-container">
         <div class="container">
             <div class="mx-auto text-center mb-5" style="max-width: 500px;">
@@ -120,7 +88,8 @@
                                 <p class="card-text text-dark">{{ Str::limit($item->deskripsi, 20) }}</p>
                                 <p class="full-description" style="display: none;">{{ $item->deskripsi }}</p>
                                 <div class="btn-action text-left">
-                                    <a class="btn btn-success py-2 px-3 btn-action float-start" href="">Lihat Selengkapnya</a>
+                                    <a class="btn btn-success py-2 px-3 btn-action float-start" href="">Lihat
+                                        Selengkapnya</a>
                                 </div>
                             </div>
                         </div>
@@ -129,5 +98,4 @@
             </div>
         </div>
     </div>
-    <!-- Products End -->
 @endsection

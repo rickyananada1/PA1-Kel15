@@ -1,6 +1,6 @@
 @extends('petani.layout.layout')
 @section('title')
-    Edit Hasil Tani
+    Ubah Hasil Tani
 @endsection
 @section('content')
     <div class="container d-block">
@@ -35,7 +35,7 @@
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
             <div class="mb-3">
-                <label for="kategori_id" class="form-label">Kategori_id</label>
+                <label for="kategori_id" class="form-label">Kategori</label>
                 <select name="kategori_id" id="kategori" class="form-control">
                     @forelse ($kategori as $items)
                         <option value="{{ $items->id }}">{{ $items->nama }}</option>
@@ -47,8 +47,8 @@
             @error('kategori_id')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
-            <button type="submit" class="btn btn-primary">Update</button>
-            <a href="/petani/hasiltani" class="btn btn-danger">Cancel</a>
+            <button type="submit" class="btn btn-primary">Ubah</button>
+            <a href="/petani/hasiltani" class="btn btn-danger">Batalkan</a>
         </form>
     </div>
 @endsection

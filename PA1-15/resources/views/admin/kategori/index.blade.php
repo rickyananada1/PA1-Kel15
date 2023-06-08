@@ -1,15 +1,21 @@
 @extends('admin.layout.layout')
+@section('title')
+    Daftar Kategori
+@endsection
 @push('script')
-    <script>
-        $(document).ready(function() {
-            $('#table').DataTable();
-        });
-    </script>
-    <script src="https://cdn.datatables.net/v/bs4/dt-1.13.4/datatables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
     <script>
+        $(document).ready(function() {
+            $('#search').keyup(function() {
+                var value = $(this).val().toLowerCase();
+                $('#table tbody tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
         $(document).on('click', '.delete', function(e) {
             e.preventDefault();
             var id = $(this).attr('id');
@@ -54,23 +60,23 @@
         });
     </script>
 @endpush
-
-@push('style')
-    <link href="https://cdn.datatables.net/v/bs4/dt-1.13.4/datatables.min.css" rel="stylesheet" />
-@endpush
 @section('content')
     <div class="container">
-        <h1 class="text-center pb-2">Daftar Kategori</h1>
+        <div class="row mb-3">
+            <div class="col-md-2">
+                <input type="text" id="search" class="form-control" placeholder="Cari Kategori...">
+            </div>
+        </div>
+        @if (Session::has('success_message'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success: </strong> {{ Session::get('success_message') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <table class="table" id="table">
             <thead>
-                @if (Session::has('success_message'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Success: </strong> {{ Session::get('success_message') }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
                 <tr>
                     <th scope="col">No</th>
                     <th scope="col">Nama Kategori</th>
@@ -88,10 +94,10 @@
                             <form action="/admin/kategori/{{ $items->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <a href="/admin/kategori/{{ $items->id }}" class="btn btn-success btn-sm"><i
+                                <a href="/admin/kategori/{{ $items->id }}" class="btn btn-primary btn-sm"><i
                                         class="fas fa-eye"></i></a>
                                 <a href="/admin/kategori/{{ $items->id }}/edit"
-                                    class="btn btn-success btn-sm mr-3 ml-3"><i class="fas fa-edit"></i></a>
+                                    class="btn btn-warning btn-sm mr-3 ml-3"><i class="fas fa-edit"></i></a>
                                 <button type="submit" class="btn btn-danger btn-sm delete" name="{{ $items->nama }}"
                                     id="{{ $items->id }}"><i class="fas fa-trash"></i></button>
                             </form>

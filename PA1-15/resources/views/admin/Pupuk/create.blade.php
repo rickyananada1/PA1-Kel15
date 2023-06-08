@@ -1,6 +1,6 @@
 @extends('admin.layout.layout')
 @section('title')
-    Create Pupuk
+    Tambah Pupuk
 @endsection
 @section('content')
     <form action="/admin/pupuk" method="POST">
@@ -26,7 +26,6 @@
         @error('stok')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
-        <button type="submit" class="btn btn-primary">Create</button>
-        <a href="/pupuk" class="btn btn-danger">Cancel</a>
+        <button type="submit" class="btn btn-primary">Tambah</button>
     </form>
 @endsection

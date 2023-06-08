@@ -1,18 +1,22 @@
 @extends('admin.layout.layout')
 @section('title')
-    Daftar Pupuk
+    Daftar Data Pupuk
 @endsection
 @push('script')
-    <script>
-        $(document).ready(function() {
-            $('#table').DataTable();
-        });
-    </script>
-    <script src="https://cdn.datatables.net/v/bs4/dt-1.13.4/datatables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
         crossorigin="anonymous"></script>
     <script>
+        $(document).ready(function() {
+            // Fungsi untuk melakukan live search
+            $('#search').keyup(function() {
+                var value = $(this).val().toLowerCase();
+                $('#table tbody tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+
         $(document).on('click', '.delete', function(e) {
             e.preventDefault();
             var id = $(this).attr('id');
@@ -51,10 +55,12 @@
         });
     </script>
 @endpush
-@push('style')
-    <link href="https://cdn.datatables.net/v/bs4/dt-1.13.4/datatables.min.css" rel="stylesheet" />
-@endpush
 @section('content')
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <input type="text" id="search" class="form-control" placeholder="Cari Data Pupuk...">
+        </div>
+    </div>
     <table class="table" id="table">
         <thead>
             <tr>
@@ -76,9 +82,9 @@
                         <form action="/admin/pupuk/{{ $value->id }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <a href="/admin/pupuk/{{ $value->id }}" class="btn btn-info btn-sm"><i
+                            <a href="/admin/pupuk/{{ $value->id }}" class="btn btn-primary btn-sm"><i
                                     class="fas fa-eye"></i></a>
-                            <a href="/admin/pupuk/{{ $value->id }}/edit" class="btn btn-info btn-sm ml-3 mr-3"><i
+                            <a href="/admin/pupuk/{{ $value->id }}/edit" class="btn btn-warning btn-sm ml-3 mr-3"><i
                                     class="fas fa-edit"></i></a>
                             <button class="btn btn-danger btn-sm delete" name="{{ $value->nama }}"
                                 id="{{ $value->id }}"><i class="fas fa-trash"></i></button>

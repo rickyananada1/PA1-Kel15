@@ -3,6 +3,7 @@
     Pengumuman
 @endsection
 @section('content')
+<a href="/admin/pengumuman" class="btn btn-secondary mb-3">Kembali</a>
     @foreach ($pengumuman as $item)
         <div class="card">
             <div class="card-header">
